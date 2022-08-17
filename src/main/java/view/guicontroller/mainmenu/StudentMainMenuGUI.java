@@ -12,8 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -25,12 +23,10 @@ import sharedmodels.chatroom.MessageType;
 import sharedmodels.users.SharedStudent;
 import sharedmodels.users.StudentGrade;
 import time.DateAndTime;
-import util.extra.EncodeDecodeFile;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -80,8 +76,9 @@ public class StudentMainMenuGUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        student = StudentData.student;
         Theme.setTheme(counter, background);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -146,7 +143,8 @@ public class StudentMainMenuGUI implements Initializable {
             minorLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    StudentMainMenuGUI.requestType = config.getProperty(String.class, "thesisDefenseRequest");;
+                    StudentMainMenuGUI.requestType = config.getProperty(String.class, "thesisDefenseRequest");
+                    ;
                     try {
                         openRequestPage(event);
                     } catch (IOException e) {
@@ -162,10 +160,14 @@ public class StudentMainMenuGUI implements Initializable {
         OpenPage.openNewPage(mouseEvent, page);
     }
 
-    public void setSpecifications()  {
-        statusLabel.setText(student.getStatus().toString());
-        helperMasterLabel.setText(student.getHelperMaster().getFullName());
+    public void setSpecifications() {
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, student);
+        statusLabel.setText(student.getStatus().toString());
+        if (student.getHelperMaster() == null){
+            helperMasterLabel.setText("none");
+        }else {
+            helperMasterLabel.setText(student.getHelperMaster().getFullName());
+        }
         regTimeLabel.setText(student.getRegistrationTime());
         licenseLabel.setText(student.getRegistrationLicence().toString());
     }
@@ -211,17 +213,20 @@ public class StudentMainMenuGUI implements Initializable {
     }
 
     public void CertificateStudentPage(MouseEvent mouseEvent) throws IOException {
-        StudentMainMenuGUI.requestType = config.getProperty(String.class, "certificateRequest");;
+        StudentMainMenuGUI.requestType = config.getProperty(String.class, "certificateRequest");
+        ;
         openRequestPage(mouseEvent);
     }
 
     public void minorPage(MouseEvent mouseEvent) throws IOException {
-        StudentMainMenuGUI.requestType = config.getProperty(String.class, "minorRequest");;
+        StudentMainMenuGUI.requestType = config.getProperty(String.class, "minorRequest");
+        ;
         openRequestPage(mouseEvent);
     }
 
     public void withdrawPage(MouseEvent mouseEvent) throws IOException {
-        StudentMainMenuGUI.requestType = config.getProperty(String.class, "withdrawRequest");;
+        StudentMainMenuGUI.requestType = config.getProperty(String.class, "withdrawRequest");
+        ;
         openRequestPage(mouseEvent);
     }
 
@@ -248,9 +253,9 @@ public class StudentMainMenuGUI implements Initializable {
         String text = messageBox.getText();
         String senderUsername = Client.clientUsername;
         String receiverUsername = "1";
-        if (Client.isConnect){
+        if (Client.isConnect) {
             client.getServerController().sendNewMessage(senderUsername, receiverUsername, text, MessageType.TEXT);
-        }else {
+        } else {
             //TODO
             //message offline
         }

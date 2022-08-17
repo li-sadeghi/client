@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.registrationaffairs.ListOfCoursesPageGUI">
+   <children>
+      <Hyperlink layoutX="70.0" layoutY="55.0" onAction="#backMainMenu" text="Back To Main Menu" />
+      <Hyperlink fx:id="exitHyperLink" layoutX="113.0" layoutY="97.0" onAction="#logout" text="Exit" />
+      <Label layoutX="223.0" layoutY="26.0" text="Filter:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="324.0" layoutY="35.0" text="Course ID:" />
+      <Label layoutX="537.0" layoutY="35.0" text="Units:" />
+      <Label layoutX="759.0" layoutY="35.0" text="Course Name:" />
+      <TextField fx:id="courseIdField" layoutX="276.0" layoutY="54.0" promptText="course id" />
+      <TextField fx:id="unitField" layoutX="492.0" layoutY="54.0" promptText="units" />
+      <TextField fx:id="nameField" layoutX="721.0" layoutY="54.0" promptText="course name" />
+      <Button fx:id="deleteButton" layoutX="804.0" layoutY="631.0" mnemonicParsing="false" onAction="#deleteCourse" text="Delete" visible="false" />
+      <Button fx:id="addButton" layoutX="695.0" layoutY="631.0" mnemonicParsing="false" onAction="#addCoursePage" text="Add" visible="false" />
+      <Button fx:id="editButton" layoutX="578.0" layoutY="631.0" mnemonicParsing="false" onAction="#editCoursePage" text="Edit" visible="false" />
+      <TextField fx:id="idField" layoutX="640.0" layoutY="581.0" visible="false" />
+      <Label fx:id="enterLabel" layoutX="527.0" layoutY="585.0" text="Enter Course Id:" visible="false" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="491.0" layoutY="554.0" prefHeight="18.0" prefWidth="446.0" text="Error" textFill="#fc0000" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <VBox fx:id="coursesListVbox" layoutX="22.0" layoutY="148.0" prefHeight="400.0" prefWidth="900.0" />
+      <Button fx:id="refreshButton" layoutX="860.0" layoutY="109.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="856.0" layoutY="87.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

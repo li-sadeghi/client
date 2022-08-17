@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.registrationaffairs.ListOfMastersPageGUI">
+   <children>
+      <Hyperlink layoutX="66.0" layoutY="59.0" onAction="#backMainMenu" text="Back To Main Menu" />
+      <Hyperlink fx:id="exitHyperLink" layoutX="109.0" layoutY="94.0" onAction="#logout" text="Exit" />
+      <Label layoutX="233.0" layoutY="23.0" text="Filter:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="334.0" layoutY="32.0" text="Grade:" />
+      <Label layoutX="547.0" layoutY="32.0" text="Room Number:" />
+      <Label layoutX="769.0" layoutY="32.0" text="Master Name:" />
+      <TextField fx:id="gradeField" layoutX="286.0" layoutY="51.0" promptText="grade" />
+      <TextField fx:id="roomNumberField" layoutX="502.0" layoutY="51.0" promptText="room number" />
+      <TextField fx:id="nameField" layoutX="731.0" layoutY="51.0" promptText="master name" />
+      <Button fx:id="deleteButton" layoutX="814.0" layoutY="641.0" mnemonicParsing="false" onAction="#deleteMaster" text="Delete" visible="false" />
+      <Button fx:id="addButton" layoutX="705.0" layoutY="641.0" mnemonicParsing="false" onAction="#addMasterPage" text="Add" visible="false" />
+      <Button fx:id="editButton" layoutX="588.0" layoutY="641.0" mnemonicParsing="false" onAction="#editMasterPage" text="Edit" visible="false" />
+      <TextField fx:id="idField" layoutX="650.0" layoutY="591.0" visible="false" />
+      <Label fx:id="enterLabel" layoutX="537.0" layoutY="595.0" text="Enter Master Id:" visible="false" />
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="501.0" layoutY="558.0" prefHeight="18.0" prefWidth="446.0" text="Error" textFill="#fc0000" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <VBox fx:id="mastersVBox" layoutX="25.0" layoutY="167.0" prefHeight="400.0" prefWidth="900.0" />
+      <Button fx:id="refreshButton" layoutX="870.0" layoutY="119.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="866.0" layoutY="97.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

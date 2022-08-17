@@ -98,5 +98,11 @@
          </font>
       </Label>
       <Hyperlink fx:id="exitHyperLink" layoutX="808.0" layoutY="320.0" onAction="#logout" text="Exit" />
+      <Button fx:id="refreshButton" layoutX="802.0" layoutY="467.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="804.0" layoutY="425.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

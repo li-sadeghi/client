@@ -19,13 +19,16 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
+import network.database.StudentData;
 import response.Response;
 import response.ResponseStatus;
 import sharedmodels.users.SharedStudent;
 import util.extra.EncodeDecodeFile;
 import view.OpenPage;
+import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
 import view.guicontroller.mainmenu.MohseniPageController;
+import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -83,6 +86,11 @@ public class StudentProfileGUI implements Initializable {
     Hyperlink exitHyperLink;
     @FXML
     Hyperlink backMainMenuHyper;
+    @FXML
+    Button refreshButton;
+    @FXML
+    Label connectionLabel;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,22 +105,28 @@ public class StudentProfileGUI implements Initializable {
             phoneNumberTextField.setVisible(false);
             emailButton.setVisible(false);
             phoneButton.setVisible(false);
+        }else {
+            counter = StudentMainMenuGUI.counter;
+            studentUsername = StudentMainMenuGUI.student.getUsername();
         }
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Response response = null;
-                try {
-                    response = client.getServerController().getStudentRequest(studentUsername);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                SharedStudent student = (SharedStudent) response.getData("user");
-                try {
+                CheckConnection.checkConnection(refreshButton, connectionLabel);
+                if (isMohseni){
+                    Response response = null;
+                    try {
+                        response = client.getServerController().getStudentRequest(studentUsername);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    SharedStudent student = (SharedStudent) response.getData("user");
                     setProfile(student);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                }
+                else {
+                    SharedStudent student = StudentData.student;
+                    setProfile(student);
                 }
             }
         }));
@@ -121,7 +135,7 @@ public class StudentProfileGUI implements Initializable {
     }
 
 
-    public void setProfile(SharedStudent student) throws IOException {
+    public void setProfile(SharedStudent student)  {
         fullNameLabel.setText(student.getFullName());
         String nationalCode = student.getNationalCode();
         nationalCodeLabel.setText(nationalCode);
@@ -147,7 +161,7 @@ public class StudentProfileGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
-        String page = "Login.fxml";
+        String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
@@ -157,23 +171,17 @@ public class StudentProfileGUI implements Initializable {
     }
 
     public void changeEmailAddress(ActionEvent actionEvent) throws IOException {
-//        String enteredEmail = emailTextField.getText();
-//        Response response = client.getServerController().sendChangeEmailRequest(student.getUsername(), enteredEmail);
-//        String error = response.getErrorMessage();
-//        showError(error);
-//        if (response.getStatus() == ResponseStatus.OK) {
-//            emailAddressLabel.setText(enteredEmail);
-//        }
+        String enteredEmail = emailTextField.getText();
+        Response response = client.getServerController().sendChangeEmailRequest(studentUsername, enteredEmail);
+        String error = response.getErrorMessage();
+        showError(error);
     }
 
     public void changePhoneNumber(ActionEvent actionEvent) throws IOException {
-//        String enteredPhoneNumber = phoneNumberTextField.getText();
-//        Response response = client.getServerController().sendChangePhoneNumberRequest(student.getUsername(), enteredPhoneNumber);
-//        String error = response.getErrorMessage();
-//        showError(error);
-//        if (response.getStatus() == ResponseStatus.OK) {
-//            phoneNumberLabel.setText(enteredPhoneNumber);
-//        }
+        String enteredPhoneNumber = phoneNumberTextField.getText();
+        Response response = client.getServerController().sendChangePhoneNumberRequest(studentUsername, enteredPhoneNumber);
+        String error = response.getErrorMessage();
+        showError(error);
     }
 
     public void showError(String errorName) {
@@ -181,5 +189,9 @@ public class StudentProfileGUI implements Initializable {
         noticeLabel.setVisible(true);
         emailTextField.clear();
         phoneNumberTextField.clear();
+    }
+
+    public void refresh(ActionEvent actionEvent) throws IOException {
+        ServerController.reconnect();
     }
 }

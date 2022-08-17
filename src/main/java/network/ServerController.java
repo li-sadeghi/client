@@ -149,4 +149,27 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response sendChangeEmailRequest(String studentUsername, String enteredEmail) throws IOException {
+        Request request = new Request(RequestType.CHANGE_EMAIL);
+        request.addData("username", studentUsername);
+        request.addData("newEmail", enteredEmail);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response sendChangePhoneNumberRequest(String studentUsername, String enteredPhoneNumber) throws IOException {
+        Request request = new Request(RequestType.CHANGE_PHONE);
+        request.addData("username", studentUsername);
+        request.addData("newPhone", enteredPhoneNumber);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response deleteCourse(String courseId) throws IOException {
+        Request request = new Request(RequestType.DELETE_COURSE);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+        return getResponse();
+    }
 }
