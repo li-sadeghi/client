@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.mainmenu.StudentMainMenuGUI">
+   <children>
+      <VBox fx:id="userImageVBox" prefHeight="170.0" prefWidth="130.0" />
+      <Hyperlink fx:id="exitHyperLink" layoutX="14.0" layoutY="170.0" onAction="#logout" text="Exit" />
+      <Label layoutX="219.0" layoutY="14.0" text="Current date and time:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentTimeLabel" layoutX="381.0" layoutY="14.0" text="Time">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="34.0" text="Your last login at:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lastLoginTimeLabel" layoutX="381.0" layoutY="34.0" text="Last time">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="291.0" layoutY="53.0" text="Your name:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="237.0" layoutY="75.0" text="Your email address:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="380.0" layoutY="54.0" text="Name" />
+      <Label fx:id="emailAddressLabel" layoutX="380.0" layoutY="77.0" text="Email Address" />
+      <Label layoutX="96.0" layoutY="427.0" text="Educational status">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="statusLabel" layoutX="376.0" layoutY="427.0" text="Label" />
+      <Label layoutX="98.0" layoutY="458.0" text="Helper Master">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="96.0" layoutY="492.0" text="Registration license">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="98.0" layoutY="529.0" text="Registration time">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="helperMasterLabel" layoutX="376.0" layoutY="458.0" text="Label" />
+      <Label fx:id="licenseLabel" layoutX="376.0" layoutY="492.0" text="Label" />
+      <Label fx:id="regTimeLabel" layoutX="376.0" layoutY="529.0" text="Label" />
+      <Label layoutX="799.0" layoutY="154.0" text="Registration Affairs">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="641.0" layoutY="154.0" text="educational services">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="496.0" layoutY="154.0" text="Record affairs">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="315.0" layoutY="154.0" onMouseClicked="#profilePage" text="Your Profile">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="826.0" layoutY="178.0" onMouseClicked="#listOfCoursesPage" text="List of courses" />
+      <Label layoutX="825.0" layoutY="212.0" onMouseClicked="#listOfMastersPage" text="List of masters" />
+      <Label layoutX="680.0" layoutY="178.0" onMouseClicked="#weeklySchedulePage" text="Weekly Schedule" />
+      <Label layoutX="680.0" layoutY="212.0" onMouseClicked="#examListPage" text="Exam list" />
+      <Label layoutX="680.0" layoutY="245.0" text="requests" />
+      <Label fx:id="recommendationLabel" layoutX="700.0" layoutY="270.0" onMouseClicked="#recommendationPage" text="Recommendation" />
+      <Label fx:id="certificateLabel" layoutX="698.0" layoutY="303.0" onMouseClicked="#CertificateStudentPage" text="Certificate student" />
+      <Label fx:id="minorLabel" layoutX="698.0" layoutY="332.0" onMouseClicked="#minorPage" text="Minor" />
+      <Label fx:id="withdrawLabel" layoutX="698.0" layoutY="362.0" onMouseClicked="#withdrawPage" text="Withdrawal from education" />
+      <Label layoutX="519.0" layoutY="178.0" onMouseClicked="#temporaryScoresPage" text="Temporary scores" />
+      <Label layoutX="518.0" layoutY="212.0" onMouseClicked="#educationalStatusPage" text="Educational status" />
+      <Hyperlink layoutX="755.0" layoutY="51.0" onAction="#changeTheme" text="Change Theme" />
+      <Button layoutX="672.0" layoutY="463.0" mnemonicParsing="false" onAction="#openEduGram" text="Edu Gram" />
+      <Button fx:id="refreshButton" layoutX="41.0" layoutY="640.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="762.0" layoutY="115.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="messageBox" layoutX="454.0" layoutY="611.0" prefHeight="81.0" prefWidth="200.0" />
+      <Button layoutX="657.0" layoutY="666.0" mnemonicParsing="false" onAction="#sendMessageToAdmin" text="Send To Admin" />
+      <Label fx:id="errorLabel" layoutX="762.0" layoutY="670.0" text="your message was sent to admin." textFill="#089944" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

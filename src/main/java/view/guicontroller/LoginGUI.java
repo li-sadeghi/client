@@ -138,7 +138,6 @@ public class LoginGUI implements Initializable {
             Client.clientType = config.getProperty(String.class, "mohseniType");
             page = config.getProperty(String.class, "mohseniPage");
         }
-        System.out.println(page);
         OpenPage.openNewPage(actionEvent, page);
     }
 

@@ -79,7 +79,6 @@ public class Client {
 //                        }
 //                    }
                 }
-                System.out.println(isConnect);
                 try {
                     Thread.sleep(ping);
                 } catch (InterruptedException e) {

@@ -60,6 +60,8 @@ public class AdminPageController implements Initializable {
     Button refreshButton;
     @FXML
     Label connectionLabel;
+    @FXML
+    Label errorLabel;
 
 
     @Override
@@ -73,7 +75,7 @@ public class AdminPageController implements Initializable {
                 currentTimeLabel.setText(time);
             }
         };
-        timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -89,7 +91,7 @@ public class AdminPageController implements Initializable {
 
     private void setPage(ArrayList<Message> messages, SharedUser admin) {
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, admin);
-        messages.clear();
+        messageBox.clear();
         StringBuilder text = new StringBuilder();
         for (Message message : messages) {
             String newMessage = getMessage(message);
@@ -100,7 +102,7 @@ public class AdminPageController implements Initializable {
 
     public String getMessage(Message message){
         String text = "";
-        text += message.getSender().getUsername();
+        text += message.getSenderId();
         text += ":\n";
         text += message.getMessageText();
         text += "\n\n";
@@ -125,6 +127,7 @@ public class AdminPageController implements Initializable {
         client.getServerController().sendNewMessage(senderUsername, receiverUsername, messageText, MessageType.TEXT);
         messageField.clear();
         usernameField.clear();
+        errorLabel.setVisible(true);
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {

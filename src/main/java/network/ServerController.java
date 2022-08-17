@@ -142,4 +142,11 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response getStudentRequest(String studentUsername) throws IOException {
+        Request request = new Request(RequestType.SINGLE_STUDENT);
+        request.addData("username", studentUsername);
+        sendRequest(request);
+        return getResponse();
+    }
 }

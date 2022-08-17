@@ -15,7 +15,7 @@ public class MohseniData {
     public static SharedUser mohseni;
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllMohseniData(Client.clientUsername);
-        mohseni = (SharedStudent) response.getData("user");
+        mohseni = (SharedUser) response.getData("user");
         students = (ArrayList<SharedStudent>) response.getData("students");
     }
 }

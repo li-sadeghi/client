@@ -12,8 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
@@ -27,10 +29,12 @@ import time.DateAndTime;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
+import view.guicontroller.profile.StudentProfileGUI;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MohseniPageController implements Initializable {
@@ -40,7 +44,8 @@ public class MohseniPageController implements Initializable {
     public static Timeline timeline;
     public static Config config = Config.getConfig();
     public static int counter = 0;
-    public static TableView<SharedStudent> studentsTable = new TableView<>();
+    public static TableView<SharedStudent> studentsTable;
+    public static List<SharedStudent> studentsSelected = new ArrayList<>();
     @FXML
     Label currentTimeLabel;
     @FXML
@@ -70,6 +75,9 @@ public class MohseniPageController implements Initializable {
     @FXML
     Label errorLabel;
 
+    @FXML
+    Button profileButton;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -82,13 +90,16 @@ public class MohseniPageController implements Initializable {
                 currentTimeLabel.setText(time);
             }
         };
-        timeline = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 SharedUser mohseni = MohseniData.mohseni;
                 ArrayList<SharedStudent> students = MohseniData.students;
                 setPage(mohseni, students);
+                if (studentsSelected.size() == 1){
+                    profileButton.setVisible(true);
+                }
             }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -97,6 +108,8 @@ public class MohseniPageController implements Initializable {
     }
 
     private void setPage(SharedUser mohseni, ArrayList<SharedStudent> students) {
+        studentsVbox.getChildren().clear();
+        studentsTable = new TableView<>();
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, mohseni);
         TableColumn<SharedStudent, String> nameColumn = new TableColumn<>("full name");
         nameColumn.setPrefWidth(200);
@@ -122,8 +135,15 @@ public class MohseniPageController implements Initializable {
             boolean phoneOk = StringMatcher.isOk(phoneField.getText(), phone);;
             if (nameOk && idOk && phoneOk)studentsTable.getItems().add(student);
         }
+        studentsTable.getSortOrder().add(enteringYear);
         studentsVbox.getChildren().add(studentsTable);
         studentsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        studentsTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                studentsSelected = studentsTable.getSelectionModel().getSelectedItems();
+            }
+        });
     }
 
 
@@ -145,7 +165,6 @@ public class MohseniPageController implements Initializable {
 
 
     public void sendMessageToAll(ActionEvent actionEvent) {
-        ArrayList<SharedStudent> studentsSelected = (ArrayList<SharedStudent>) studentsTable.getSelectionModel().getSelectedItems();
         String text = messageBox.getText();
         String senderUser = MohseniData.mohseni.getUsername();
         for (SharedStudent student : studentsSelected) {
@@ -154,5 +173,13 @@ public class MohseniPageController implements Initializable {
         }
         errorLabel.setVisible(true);
         messageBox.clear();
+    }
+
+    public void openProfilePage(ActionEvent actionEvent) throws IOException {
+        SharedStudent student= studentsSelected.get(0);
+        StudentProfileGUI.isMohseni = true;
+        StudentProfileGUI.studentUsername = student.getUsername();
+        String page = config.getProperty(String.class, "studentProfile");
+        OpenPage.openNewPage(new Stage(), page);
     }
 }

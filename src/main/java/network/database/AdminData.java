@@ -17,8 +17,7 @@ public class AdminData {
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllAdminData();
-        messages = (ArrayList<Message>) response.getData("messages");
         admin = (SharedUser) response.getData("user");
-        System.out.println(admin.getEmailAddress());
+        messages = (ArrayList<Message>) response.getData("messages");
     }
 }
