@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.editpages.EditMasterPageGUI">
+   <children>
+      <Hyperlink layoutX="71.0" layoutY="28.0" onAction="#backMainMenu" text="Back To Main Menu" />
+      <Hyperlink fx:id="exitHyperLink" layoutX="114.0" layoutY="70.0" onAction="#logout" text="Exit" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="40.0" text="Edit Master Page" textFill="#d42525">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="99.0" layoutY="151.0" text="Master Password:" />
+      <Label layoutX="99.0" layoutY="184.0" text="Master FullName:" />
+      <Label layoutX="99.0" layoutY="217.0" text="Master NationalCode:" />
+      <Label layoutX="96.0" layoutY="253.0" text="Maste Phone Number:" />
+      <Label layoutX="96.0" layoutY="288.0" text="Email Address:" />
+      <Label layoutX="96.0" layoutY="322.0" text="Room Number:" />
+      <Label layoutX="96.0" layoutY="354.0" text="Department ID:" />
+      <Label layoutX="96.0" layoutY="390.0" text="Grade(S, C, or F)*:" />
+      <TextField fx:id="passwordField" layoutX="265.0" layoutY="147.0" />
+      <TextField fx:id="fullNameField" layoutX="266.0" layoutY="180.0" />
+      <TextField fx:id="nationalCodeField" layoutX="266.0" layoutY="213.0" />
+      <TextField fx:id="phoneNumberField" layoutX="266.0" layoutY="249.0" />
+      <TextField fx:id="emailField" layoutX="266.0" layoutY="284.0" />
+      <TextField fx:id="roomNumberField" layoutX="266.0" layoutY="318.0" />
+      <TextField fx:id="departmentIdField" layoutX="266.0" layoutY="350.0" />
+      <TextField fx:id="gradeField" layoutX="270.0" layoutY="386.0" />
+      <Button layoutX="289.0" layoutY="514.0" mnemonicParsing="false" onAction="#editMaster" text="Edit Master" />
+      <Label fx:id="editMasterLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="551.0" prefHeight="18.0" prefWidth="629.0" text="Your changes have been applied successfully" textFill="#22a124" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="102.0" layoutY="578.0" text="*S represent of ASSISTANT_PROFESSOR" />
+      <Label layoutX="102.0" layoutY="612.0" text="*C represent of ASSOCIATE_PROFESSOR" />
+      <Label layoutX="102.0" layoutY="646.0" text="*F represent of FULL_PROFESSOR" />
+      <Label layoutX="96.0" layoutY="426.0" text="Add Course ID for Master:" />
+      <TextField fx:id="courseIdField" layoutX="270.0" layoutY="422.0" />
+      <Label layoutX="99.0" layoutY="116.0" text="Master ID(Username):" />
+      <TextField fx:id="idField" layoutX="265.0" layoutY="112.0" />
+      <Label layoutX="96.0" layoutY="465.0" text="Master Role(M, or E)**:" />
+      <TextField fx:id="roleField" layoutX="270.0" layoutY="461.0" />
+      <Label layoutX="444.0" layoutY="612.0" text="**E represent of EducationalAssistant" />
+      <Label layoutX="444.0" layoutY="646.0" text="**M represent of Master" />
+      <Button fx:id="choosePicture" layoutX="516.0" layoutY="461.0" mnemonicParsing="false" onAction="#choosePicture" text="Choose Picture" />
+      <Button fx:id="refreshButton" layoutX="870.0" layoutY="119.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="866.0" layoutY="97.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

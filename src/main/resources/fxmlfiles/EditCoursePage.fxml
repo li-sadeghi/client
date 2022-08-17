@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.editpages.EditCoursePageGUI">
+   <children>
+      <Hyperlink layoutX="70.0" layoutY="55.0" onAction="#backMainMenu" text="Back To Main Menu" />
+      <Hyperlink fx:id="exitHyperLink" layoutX="113.0" layoutY="97.0" onAction="#logout" text="Exit" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="327.0" layoutY="61.0" text="Edit And Add Course Page" textFill="#d42525">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="161.0" text="Course ID:" />
+      <Label layoutX="99.0" layoutY="200.0" text="Course Name:" />
+      <Label layoutX="99.0" layoutY="240.0" text="Master ID:" />
+      <Label layoutX="96.0" layoutY="277.0" text="Department ID:" />
+      <Label layoutX="96.0" layoutY="318.0" text="Unit:" />
+      <Label layoutX="96.0" layoutY="350.0" text="Add New Student(Enter ID):" />
+      <Label layoutX="96.0" layoutY="390.0" text="Weekly Time*:" />
+      <Label layoutX="92.0" layoutY="425.0" text="Exam Time**:" />
+      <Label layoutX="162.0" layoutY="618.0" text="*Please enter this, by this format: 7 AM on SUNDAY" />
+      <Label layoutX="162.0" layoutY="654.0" text="**Please Enter this, by this format: 2022-01-01 At 21:00:00" />
+      <TextField fx:id="courseIdField" layoutX="266.0" layoutY="157.0" />
+      <TextField fx:id="courseNameField" layoutX="266.0" layoutY="196.0" />
+      <TextField fx:id="masterIdField" layoutX="266.0" layoutY="236.0" />
+      <TextField fx:id="departmentIdField" layoutX="266.0" layoutY="273.0" />
+      <TextField fx:id="unitField" layoutX="266.0" layoutY="314.0" />
+      <TextField fx:id="studentIdField" layoutX="266.0" layoutY="346.0" />
+      <TextField fx:id="weeklyTimeField" layoutX="266.0" layoutY="386.0" />
+      <TextField fx:id="examTimeField" layoutX="266.0" layoutY="421.0" />
+      <Button layoutX="192.0" layoutY="578.0" mnemonicParsing="false" onAction="#addCourse" text="Add Course" />
+      <Button layoutX="330.0" layoutY="578.0" mnemonicParsing="false" onAction="#editCourse" text="Edit Course" />
+      <Label fx:id="editCourseLabel" layoutX="468.0" layoutY="582.0" text="Your changes have been applied successfully" textFill="#22a124" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="addCourseLabel" layoutX="474.0" layoutY="582.0" text="Your Enterd Course Added Successfully!" textFill="#198e2e" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="424.0" layoutY="346.0" mnemonicParsing="false" onAction="#addStudent" text="Add student" />
+      <Label layoutX="92.0" layoutY="465.0" text="Add TA Student(enter ID) :" />
+      <TextField fx:id="idTAField" layoutX="266.0" layoutY="461.0" />
+      <Button layoutX="439.0" layoutY="461.0" mnemonicParsing="false" onAction="#addTA" text="Add TA" />
+      <Label layoutX="92.0" layoutY="505.0" text="Capacity : " />
+      <TextField fx:id="capacityField" layoutX="266.0" layoutY="501.0" />
+      <Label layoutX="92.0" layoutY="540.0" text="Prerequisite(Course id) : " />
+      <TextField fx:id="prerequisiteField" layoutX="266.0" layoutY="536.0" />
+      <Button fx:id="refreshButton" layoutX="870.0" layoutY="119.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="866.0" layoutY="97.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
