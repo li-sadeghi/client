@@ -20,7 +20,6 @@ import network.ServerController;
 import network.database.MasterData;
 import network.database.StudentData;
 import response.Response;
-import sharedmodels.department.Course;
 import sharedmodels.users.MasterRole;
 import sharedmodels.users.SharedMaster;
 import view.OpenPage;
