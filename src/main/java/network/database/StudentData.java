@@ -24,6 +24,6 @@ public class StudentData {
         courses = (ArrayList<Course>) response.getData("courses");
         masters = (ArrayList<SharedMaster>) response.getData("masters");
 
-        //get messages for show last 10 messages...
+        //get messages for show last 10 messages... by class Chat
     }
 }

@@ -172,4 +172,12 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response deleteMaster(String usernameSelected, String clientUsername) throws IOException {
+        Request request = new Request(RequestType.DELETE_MASTER);
+        request.addData("username", clientUsername);
+        request.addData("usernameSelected", usernameSelected);
+        sendRequest(request);
+        return getResponse();
+    }
 }

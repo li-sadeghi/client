@@ -95,7 +95,7 @@ public class StudentProfileGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         client = ServerController.client;
-        if (isMohseni) {
+        if (isMohseni || !Client.isConnect) {
             counter = MohseniPageController.counter;
             exitHyperLink.setVisible(false);
             backMainMenuHyper.setVisible(false);

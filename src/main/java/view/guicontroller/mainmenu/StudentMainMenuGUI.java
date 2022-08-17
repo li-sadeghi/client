@@ -194,6 +194,7 @@ public class StudentMainMenuGUI implements Initializable {
 
     public void listOfMastersPage(MouseEvent mouseEvent) throws IOException {
         String page = config.getProperty(String.class, "listOfMastersPage");
+        System.out.println(page);
         OpenPage.openNewPage(mouseEvent, page);
     }
 

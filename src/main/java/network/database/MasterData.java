@@ -14,6 +14,7 @@ public class MasterData {
     public static Client client = ServerController.client;
     public static SharedMaster master;
     public static ArrayList<Course> courses;
+    public static ArrayList<SharedMaster> masters;
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
