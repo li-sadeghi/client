@@ -27,6 +27,7 @@ import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.LoginGUI;
 import view.guicontroller.Theme;
+import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class ListOfCoursesPageGUI implements Initializable {
     public static Client client = ServerController.client;
     public static Config config = Config.getConfig();
     public static TableView<Course> coursesTable;
-    public static List<Course> coursesSelected;
+    public static List<Course> coursesSelected = new ArrayList<>();
     @FXML
     Label enterLabel;
     @FXML
@@ -83,8 +84,7 @@ public class ListOfCoursesPageGUI implements Initializable {
                 if (Client.clientType.equals(config.getProperty(String.class, "studentType"))) {
                     counter = StudentMainMenuGUI.counter;
                 } else {
-                    //TODO
-                    //counter = MasterMainMenuGUI.counter;
+                    counter = MasterMainMenuGUI.counter;
                 }
                 Theme.setTheme(counter, background);
                 setCourseList();

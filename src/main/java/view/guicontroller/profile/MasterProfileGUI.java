@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MasterProfileGUI implements Initializable {
-    public static Client client;
+    public static Client client = ServerController.client;
     public static SharedMaster master = MasterData.master;
     public static Config config = Config.getConfig();
     @FXML

@@ -238,4 +238,12 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response sendNewProtest(String temporaryId, String protestTex) throws IOException {
+        Request request = new Request(RequestType.NEW_PROTEST);
+        request.addData("temporaryCourseId", temporaryId);
+        request.addData("protestTex", protestTex);
+        sendRequest(request);
+        return getResponse();
+    }
 }
