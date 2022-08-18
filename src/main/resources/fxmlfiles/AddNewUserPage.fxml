@@ -51,26 +51,26 @@
         <TextField fx:id="studentPhone" layoutX="717.0" layoutY="223.0" />
         <TextField fx:id="studentEmail" layoutX="717.0" layoutY="266.0" />
         <TextField fx:id="studentGrade" layoutX="718.0" layoutY="312.0" />
-        <Button fx:id="addMasterButton" layoutX="163.0" layoutY="404.0" mnemonicParsing="false" onAction="#addMaster" text="Add" />
-        <Button layoutX="771.0" layoutY="404.0" mnemonicParsing="false" onAction="#addStudent" text="Add" />
-        <Label fx:id="masterNotice" layoutX="168.0" layoutY="456.0" text="Label" textFill="RED" visible="false">
+        <Button fx:id="addMasterButton" layoutX="197.0" layoutY="443.0" mnemonicParsing="false" onAction="#addMaster" text="Add" />
+        <Button layoutX="774.0" layoutY="461.0" mnemonicParsing="false" onAction="#addStudent" text="Add" />
+        <Label fx:id="masterNotice" layoutX="179.0" layoutY="586.0" text="Label" textFill="RED" visible="false">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Label fx:id="studentNotice" layoutX="756.0" layoutY="465.0" text="Label" textFill="RED" visible="false">
+        <Label fx:id="studentNotice" layoutX="767.0" layoutY="595.0" text="Label" textFill="RED" visible="false">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
         <Label layoutX="566.0" layoutY="361.0" text="Entering Year" />
         <TextField fx:id="enteringYear" layoutX="719.0" layoutY="357.0" />
-      <Label layoutX="92.0" layoutY="568.0" text="*S represent of ASSISTANT_PROFESSOR" />
-      <Label layoutX="92.0" layoutY="602.0" text="*C represent of ASSOCIATE_PROFESSOR" />
-      <Label layoutX="92.0" layoutY="636.0" text="*F represent of FULL_PROFESSOR" />
-      <Label layoutX="679.0" layoutY="568.0" text="*U represent of UNDERGRADUATE" />
-      <Label layoutX="679.0" layoutY="602.0" text="*G represent of GRADUATED" />
-      <Label layoutX="679.0" layoutY="636.0" text="*P represent of PHD" />
+      <Label layoutX="112.0" layoutY="489.0" text="*S represent of ASSISTANT_PROFESSOR" />
+      <Label layoutX="111.0" layoutY="509.0" text="*C represent of ASSOCIATE_PROFESSOR" />
+      <Label layoutX="128.0" layoutY="527.0" text="*F represent of FULL_PROFESSOR" />
+      <Label layoutX="702.0" layoutY="518.0" text="*U represent of UNDERGRADUATE" />
+      <Label layoutX="718.0" layoutY="536.0" text="*G represent of GRADUATED" />
+      <Label layoutX="740.0" layoutY="559.0" text="*P represent of PHD" />
       <Button layoutX="392.0" layoutY="143.0" mnemonicParsing="false" onAction="#choosePicture" text="Choose picture" />
       <Button fx:id="refreshButton1" layoutX="875.0" layoutY="33.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
       <Label fx:id="connectionLabel" layoutX="871.0" layoutY="11.0" text="Loading...">
@@ -78,5 +78,9 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <Label layoutX="32.0" layoutY="383.0" text="Master Role(M, E or C):" />
+      <TextField fx:id="masterRoleField" layoutX="163.0" layoutY="379.0" />
+      <Label layoutX="566.0" layoutY="401.0" text="Helper Master Id:" />
+      <TextField fx:id="helperMasterIdField" layoutX="721.0" layoutY="397.0" />
     </children>
 </AnchorPane>

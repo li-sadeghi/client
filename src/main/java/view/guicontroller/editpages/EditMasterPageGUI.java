@@ -20,6 +20,7 @@ import network.Client;
 import network.ServerController;
 import network.database.MasterData;
 import response.Response;
+import sharedmodels.department.Department;
 import sharedmodels.users.MasterGrade;
 import sharedmodels.users.MasterRole;
 import sharedmodels.users.SharedMaster;
@@ -33,12 +34,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EditMasterPageGUI implements Initializable {
     public static Client client;
     public static SharedMaster master;
     public static Config config = Config.getConfig();
+    public static ArrayList<String> coursesIDs = new ArrayList<>();
     public static byte[] byteArrayImage;
     @FXML
     ImageView myImageBackground;
@@ -91,30 +94,51 @@ public class EditMasterPageGUI implements Initializable {
     }
 
     public void editMaster(ActionEvent actionEvent) throws IOException {
-        SharedMaster newMaster = new SharedMaster();
-        String id = idField.getText();
+        String name = fullNameField.getText();
+        String username = idField.getText();
         String password = passwordField.getText();
-        String fullName = fullNameField.getText();
         String nationalCode = nationalCodeField.getText();
         String phoneNumber = phoneNumberField.getText();
         String email = emailField.getText();
-        String roomNumber = roomNumberField.getText();
-        // department = editor's department
         String grade = gradeField.getText();
-        if (grade.equals("S")) newMaster.setGrade(MasterGrade.ASSISTANT_PROFESSOR);
-        else if (grade.equals("C")) newMaster.setGrade(MasterGrade.ASSOCIATE_PROFESSOR);
-        else newMaster.setGrade(MasterGrade.FULL_PROFESSOR);
-        String newCourseId = courseIdField.getText();
-        String role = roleField.getText();
-        if (role.equals("E")) newMaster.setMasterRole(MasterRole.EDUCATIONAL_ASSISTANT);
-        else newMaster.setMasterRole(MasterRole.MASTER);
-        String imageBytes = EncodeDecodeFile.byteArrayToString(byteArrayImage);
-        newMaster.setUserImageBytes(imageBytes);
-
-        //TODO
-//        Response response = client.getServerController().editMasterRequest(editor, newMaster, password, nationalCode, phoneNumber, newCourseId);
-//        String error = response.getErrorMessage();
-//        showNotice(error);
+        String roomNumber = roomNumberField.getText();
+        String masterRole = roleField.getText();
+        if (name == "" ||
+                username == "" ||
+                password == "" ||
+                nationalCode == "" ||
+                phoneNumber == "" ||
+                email == "" ||
+                grade == "" ||
+                roomNumber == "") {
+            showNotice("Please fill in all the items");
+        } else {
+            SharedMaster newMaster = new SharedMaster();
+            newMaster.setUsername(username);
+            if (grade.equals("S")) {
+                newMaster.setGrade(MasterGrade.ASSISTANT_PROFESSOR);
+            } else if (grade.equals("C")) {
+                newMaster.setGrade(MasterGrade.ASSOCIATE_PROFESSOR);
+            } else {
+                newMaster.setGrade(MasterGrade.FULL_PROFESSOR);
+            }
+            if (masterRole.equals("M")) newMaster.setMasterRole(MasterRole.MASTER);
+            else if (masterRole.equals("E")) newMaster.setMasterRole(MasterRole.EDUCATIONAL_ASSISTANT);
+            else newMaster.setMasterRole(MasterRole.CHAIRMAN);
+            newMaster.setDepartment(new Department());
+            newMaster.setCourses(new ArrayList<>());
+            newMaster.setMasterRole(MasterRole.MASTER);
+            newMaster.setRoomNumber(roomNumber);
+            newMaster.setNationalCode(nationalCode);
+            newMaster.setPhoneNumber(phoneNumber);
+            newMaster.setEmailAddress(email);
+            newMaster.setFullName(name);
+            String imageBytes = EncodeDecodeFile.byteArrayToString(byteArrayImage);
+            newMaster.setUserImageBytes(imageBytes);
+            Response response = client.getServerController().editMasterRequest(newMaster, password, coursesIDs);
+            String error = response.getErrorMessage();
+            showNotice(error);
+        }
 
     }
 
@@ -156,5 +180,11 @@ public class EditMasterPageGUI implements Initializable {
 
     public void refresh(ActionEvent actionEvent) throws IOException {
         ServerController.reconnect();
+    }
+
+    public void addCourse(ActionEvent actionEvent) {
+        String newId = courseIdField.getText();
+        coursesIDs.add(newId);
+        courseIdField.clear();
     }
 }

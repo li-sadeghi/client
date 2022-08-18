@@ -18,7 +18,9 @@ import network.Client;
 import network.ServerController;
 import network.database.MasterData;
 import network.database.StudentData;
+import response.Response;
 import sharedmodels.department.Course;
+import sharedmodels.department.Department;
 import sharedmodels.users.SharedMaster;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
@@ -87,7 +89,7 @@ public class EditCoursePageGUI implements Initializable {
         timeline.playFromStart();
     }
 
-    public void addCourse(ActionEvent actionEvent) {
+    public void addCourse(ActionEvent actionEvent) throws IOException {
         Course newCourse = new Course();
         String id = courseIdField.getText();
         newCourse.setName(courseNameField.getText());
@@ -98,10 +100,19 @@ public class EditCoursePageGUI implements Initializable {
         String examTime = examTimeField.getText();
         int capacity = Integer.parseInt(capacityField.getText());
         String prerequisiteId = prerequisiteField.getText();
-        // create course and send request to add new course to database
-        // be careful about students id and TAs id
-        //TODO
-
+        newCourse.setId(id);
+        newCourse.setDepartment(new Department());
+        newCourse.setMaster(new SharedMaster());
+        newCourse.setUnit(units);
+        newCourse.setWeeklyTime(weeklyTime);
+        newCourse.setExamTime(examTime);
+        newCourse.setCapacity(capacity);
+        newCourse.setPrerequisite(new Course());
+        newCourse.setStudentsHaveCourse(new ArrayList<>());
+        newCourse.setTeacherAssistants(new ArrayList<>());
+        Response response = client.getServerController().addCourseRequest(newCourse, departmentId, masterId, prerequisiteId, studentIDs, TAsIds);
+        String error = response.getErrorMessage();
+        showAddNotice(error);
     }
 
     private void showAddNotice(String notice) {
@@ -110,7 +121,7 @@ public class EditCoursePageGUI implements Initializable {
         addCourseLabel.setVisible(true);
     }
 
-    public void editCourse(ActionEvent actionEvent) {
+    public void editCourse(ActionEvent actionEvent) throws IOException {
         Course newCourse = new Course();
         String id = courseIdField.getText();
         newCourse.setName(courseNameField.getText());
@@ -121,10 +132,19 @@ public class EditCoursePageGUI implements Initializable {
         String examTime = examTimeField.getText();
         int capacity = Integer.parseInt(capacityField.getText());
         String prerequisiteId = prerequisiteField.getText();
-        // create course and send request to update this course in database
-        // be careful about students id and TAs id
-        //TODO
-
+        newCourse.setId(id);
+        newCourse.setDepartment(new Department());
+        newCourse.setMaster(new SharedMaster());
+        newCourse.setUnit(units);
+        newCourse.setWeeklyTime(weeklyTime);
+        newCourse.setExamTime(examTime);
+        newCourse.setCapacity(capacity);
+        newCourse.setPrerequisite(new Course());
+        newCourse.setStudentsHaveCourse(new ArrayList<>());
+        newCourse.setTeacherAssistants(new ArrayList<>());
+        Response response = client.getServerController().editCourseRequest(newCourse, departmentId, masterId, prerequisiteId, studentIDs, TAsIds);
+        String error = response.getErrorMessage();
+        showEditNotice(error);
     }
 
     private void showEditNotice(String notice) {

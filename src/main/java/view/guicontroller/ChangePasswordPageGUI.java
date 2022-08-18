@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class ChangePasswordPageGUI implements Initializable {
-    public static Client client;
+    public static Client client = ServerController.client;
     public static Thread thread;
     public static Config config = Config.getConfig();
     @FXML

@@ -7,12 +7,16 @@ import request.Request;
 import request.RequestType;
 import response.Response;
 import sharedmodels.chatroom.MessageType;
+import sharedmodels.department.Course;
+import sharedmodels.users.SharedMaster;
+import sharedmodels.users.SharedStudent;
 import util.Jackson;
 import view.OpenPage;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -177,6 +181,60 @@ public class ServerController {
         Request request = new Request(RequestType.DELETE_MASTER);
         request.addData("username", clientUsername);
         request.addData("usernameSelected", usernameSelected);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response addCourseRequest(Course newCourse, String departmentId, String masterId, String prerequisiteId, ArrayList<String> studentIDs, ArrayList<String> tAsIds) throws IOException {
+        Request request = new Request(RequestType.ADD_COURSE);
+        request.addData("course", newCourse);
+        request.addData("departmentId", departmentId);
+        request.addData("masterId", masterId);
+        request.addData("prerequisiteId", prerequisiteId);
+        request.addData("studentIDs", studentIDs);
+        request.addData("tAsIds", tAsIds);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response editCourseRequest(Course newCourse, String departmentId, String masterId, String prerequisiteId, ArrayList<String> studentIDs, ArrayList<String> tAsIds) throws IOException {
+        Request request = new Request(RequestType.EDIT_COURSE);
+        request.addData("course", newCourse);
+        request.addData("departmentId", departmentId);
+        request.addData("masterId", masterId);
+        request.addData("prerequisiteId", prerequisiteId);
+        request.addData("studentIDs", studentIDs);
+        request.addData("tAsIds", tAsIds);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response createNewMasterRequest(SharedMaster newMaster, String password) throws IOException {
+        //department : دانشکده همون فردی که داره میسازه
+        Request request = new Request(RequestType.ADD_MASTER);
+        request.addData("editorId", Client.clientUsername);
+        request.addData("newMaster", newMaster);
+        request.addData("password", password);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response createNewStudentRequest(SharedStudent newStudent, String password, String helperMasterId) throws IOException {
+        //department : دانشکده همون فردی که داره میسازه
+        Request request = new Request(RequestType.ADD_STUDENT);
+        request.addData("editorId", Client.clientUsername);
+        request.addData("newStudent", newStudent);
+        request.addData("password", password);
+        request.addData("helperMasterId", helperMasterId);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response editMasterRequest(SharedMaster newMaster, String password, ArrayList<String> coursesIDs) throws IOException {
+        Request request = new Request(RequestType.EDIT_MASTER);
+        request.addData("newMaster", newMaster);
+        request.addData("password", password);
+        request.addData("coursesIDs", coursesIDs);
         sendRequest(request);
         return getResponse();
     }

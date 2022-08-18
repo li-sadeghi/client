@@ -19,6 +19,7 @@ import network.Client;
 import network.ServerController;
 import network.database.MasterData;
 import response.Response;
+import sharedmodels.department.Department;
 import sharedmodels.users.*;
 import util.extra.EncodeDecodeFile;
 import view.OpenPage;
@@ -30,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddNewUserPageGUI implements Initializable {
@@ -81,6 +83,10 @@ public class AddNewUserPageGUI implements Initializable {
     Button refreshButton;
     @FXML
     Label connectionLabel;
+    @FXML
+    TextField masterRoleField;
+    @FXML
+    TextField helperMasterIdField;
 
 
     @Override
@@ -121,6 +127,7 @@ public class AddNewUserPageGUI implements Initializable {
         String email = masterEmail.getText();
         String grade = masterGrade.getText();
         String roomNumber = maserRoomNumber.getText();
+        String masterRole = masterRoleField.getText();
         if (name == "" ||
                 username == "" ||
                 password == "" ||
@@ -140,17 +147,22 @@ public class AddNewUserPageGUI implements Initializable {
             } else {
                 newMaster.setGrade(MasterGrade.FULL_PROFESSOR);
             }
+            if (masterRole.equals("M")) newMaster.setMasterRole(MasterRole.MASTER);
+            else if (masterRole.equals("E")) newMaster.setMasterRole(MasterRole.EDUCATIONAL_ASSISTANT);
+            else newMaster.setMasterRole(MasterRole.CHAIRMAN);
+            newMaster.setDepartment(new Department());
+            newMaster.setCourses(new ArrayList<>());
             newMaster.setMasterRole(MasterRole.MASTER);
             newMaster.setRoomNumber(roomNumber);
+            newMaster.setNationalCode(nationalCode);
+            newMaster.setPhoneNumber(phoneNumber);
             newMaster.setEmailAddress(email);
             newMaster.setFullName(name);
             String imageBytes = EncodeDecodeFile.byteArrayToString(byteArrayImage);
             newMaster.setUserImageBytes(imageBytes);
-            //TODO
-//            Response response = client.getServerController().sendCreateNewUserRequest(newMaster, password, phoneNumber, nationalCode);
-//            String error = response.getErrorMessage();
-//            showMasterError(error);
-
+            Response response = client.getServerController().createNewMasterRequest(newMaster, password);
+            String error = response.getErrorMessage();
+            showMasterError(error);
         }
     }
 
@@ -163,6 +175,8 @@ public class AddNewUserPageGUI implements Initializable {
         String email = studentEmail.getText();
         String grade = studentGrade.getText();
         String entering = enteringYear.getText();
+        String helperMasterId = helperMasterIdField.getText();
+
         if (name == "" ||
                 username == "" ||
                 password == "" ||
@@ -176,6 +190,18 @@ public class AddNewUserPageGUI implements Initializable {
             SharedStudent newStudent = new SharedStudent();
             newStudent.setFullName(name);
             newStudent.setUsername(username);
+            newStudent.setNationalCode(nationalCode);
+            newStudent.setPhoneNumber(phoneNumber);
+            newStudent.setRole(Role.STUDENT);
+            String imageBytes = EncodeDecodeFile.byteArrayToString(byteArrayImage);
+            newStudent.setUserImageBytes(imageBytes);
+            newStudent.setAverage(0);
+            newStudent.setUnits(0);
+            newStudent.setDepartment(new Department());
+            newStudent.setStatus(EducationalStatus.STUDYING);
+            newStudent.setCourses(new ArrayList<>());
+            newStudent.setPassedCourses(new ArrayList<>());
+            newStudent.setTemporaryCourses(new ArrayList<>());
             newStudent.setEmailAddress(email);
             newStudent.setEnteringYear(entering);
             if (grade.equals("U")) {
@@ -185,10 +211,9 @@ public class AddNewUserPageGUI implements Initializable {
             } else {
                 newStudent.setGrade(StudentGrade.PHD);
             }
-            //TODO
-//            Response response = client.getServerController().sendCreateNewUserRequest(newStudent, password, phoneNumber, nationalCode);
-//            String error = response.getErrorMessage();
-//            showStudentError(error);
+            Response response = client.getServerController().createNewStudentRequest(newStudent, password, helperMasterId);
+            String error = response.getErrorMessage();
+            showStudentError(error);
 
         }
     }
