@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="background" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.profile.MasterProfileGUI">
+    <children>
+        <Label layoutX="109.0" layoutY="84.0" text="Full Name:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="109.0" layoutY="118.0" text="National Code:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="107.0" layoutY="154.0" text="Master ID:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="107.0" layoutY="194.0" text="Phone Number:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="99.0" layoutY="232.0" text="Email Address:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="99.0" layoutY="276.0" text="Room Number:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="103.0" layoutY="314.0" text="Department:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <Label layoutX="103.0" layoutY="351.0" text="Grade:">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <VBox fx:id="userImageVBox" layoutX="758.0" layoutY="42.0" prefHeight="170.0" prefWidth="130.0" />
+        <Label fx:id="fullNameLabel" layoutX="340.0" layoutY="84.0" text="Label" />
+        <Label fx:id="nationalCodeLabel" layoutX="340.0" layoutY="118.0" text="Label" />
+        <Label fx:id="masterIdLabel" layoutX="340.0" layoutY="154.0" text="Label" />
+        <Label fx:id="phoneNumberLabel" layoutX="340.0" layoutY="194.0" text="Label" />
+        <Label fx:id="emailAddressLabel" layoutX="340.0" layoutY="232.0" text="Label" />
+        <Label fx:id="roomNumberLabel" layoutX="340.0" layoutY="276.0" text="Label" />
+        <Label fx:id="departmentLabel" layoutX="340.0" layoutY="314.0" text="Label" />
+        <Label fx:id="gradeLabel" layoutX="340.0" layoutY="351.0" text="Label" />
+      <Hyperlink layoutX="765.0" layoutY="273.0" onAction="#backMainMenu" text="Back To Main Menu" />
+      <Label layoutX="237.0" layoutY="445.0" text="Chane Email Address:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="237.0" layoutY="493.0" text="Change Phone Number:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailTextField" layoutX="411.0" layoutY="441.0" promptText="your new email" />
+      <TextField fx:id="phoneNumberTextField" layoutX="412.0" layoutY="489.0" promptText="your new phone number" />
+      <Button layoutX="587.0" layoutY="441.0" mnemonicParsing="false" onAction="#changeEmailAddress" text="Change" />
+      <Button layoutX="587.0" layoutY="489.0" mnemonicParsing="false" onAction="#changePhoneNumber" text="Change" />
+      <Label fx:id="noticeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="560.0" prefHeight="18.0" prefWidth="602.0" text="your email address changed successfully!" textAlignment="CENTER" textFill="#38098e" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="exitHyperLink" layoutX="809.0" layoutY="311.0" onAction="#logout" text="Exit" />
+      <Button fx:id="refreshButton" layoutX="562.0" layoutY="76.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
+      <Label fx:id="connectionLabel" layoutX="564.0" layoutY="34.0" text="Loading...">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

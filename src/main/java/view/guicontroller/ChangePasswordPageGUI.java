@@ -1,16 +1,23 @@
 package view.guicontroller;
 
 import config.Config;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
+import network.database.StudentData;
 import response.Response;
+import sharedmodels.users.SharedStudent;
 import view.OpenPage;
 
 import java.io.IOException;
@@ -38,32 +45,20 @@ public class ChangePasswordPageGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Theme.setTheme(2, background);
-        thread = new Thread(new Runnable() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
-            public void run() {
-                while (true){
-                    CheckConnection.checkConnection(refreshButton, connectionLabel);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+            public void handle(ActionEvent event) {
+                CheckConnection.checkConnection(refreshButton, connectionLabel);
             }
-        });
-        thread.setDaemon(true);
-        thread.start();
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
     }
 
     public void changePass(ActionEvent actionEvent) throws NoSuchAlgorithmException, IOException {
         String enteredPrePass = prePassField.getText();
         String enteredNewPass = newPassField.getText();
         Response response = client.getServerController().sendChangePasswordRequest(enteredPrePass, enteredNewPass, Client.clientUsername);
-//        if (response.getStatus() == ResponseStatus.OK) {
-//            showError(config.getProperty(String.class, "changePassNotice"));
-//        } else {
-//            showError(config.getProperty(String.class, "tryError"));
-//        }
         showError(response.getErrorMessage());
     }
 
@@ -75,7 +70,6 @@ public class ChangePasswordPageGUI implements Initializable {
     }
 
     public void backLoginPage(ActionEvent actionEvent) throws IOException {
-        thread.interrupt();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }

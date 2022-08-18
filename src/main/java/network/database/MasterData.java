@@ -19,5 +19,7 @@ public class MasterData {
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
         master = (SharedMaster) response.getData("user");
+        courses = (ArrayList<Course>) response.getData("courses");
+        masters = (ArrayList<SharedMaster>) response.getData("masters");
     }
 }
