@@ -1,7 +1,11 @@
 package view.guicontroller.chatroom;
 
 import config.Config;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,21 +14,30 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
+import network.database.MasterData;
+import network.database.StudentData;
 import response.Response;
 import sharedmodels.chatroom.Chat;
+import sharedmodels.chatroom.Message;
+import sharedmodels.chatroom.MessageType;
+import sharedmodels.users.SharedStudent;
 import util.extra.EncodeDecodeFile;
-import view.guicontroller.LoginGUI;
+import view.OpenPage;
+import view.guicontroller.CheckConnection;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ChatPvController implements Initializable {
@@ -37,7 +50,7 @@ public class ChatPvController implements Initializable {
     @FXML
     Button downloadMediaButton;
     @FXML
-    VBox imageHBox;
+    HBox imageHBox;
     @FXML
     Label nameLabel;
     @FXML
@@ -46,20 +59,69 @@ public class ChatPvController implements Initializable {
     TextArea chatBox;
     @FXML
     Button refreshButton;
+    @FXML
+    Label connectionLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        receiverUsername = thisChat.getReceiverId();
+        senderUsername = thisChat.getSenderId();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                CheckConnection.checkConnection(refreshButton, connectionLabel);
+                if (Client.clientType.equals(config.getProperty(String.class, "masterType"))){
+                    thisChat = StudentData.chats.get(indexOfChat);
+                }else {
+                    thisChat = MasterData.chats.get(indexOfChat);
+                }
+                setProfile();
+                setPage(thisChat.getMessages());
+
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
 
     }
 
-    private void setPage(ArrayList<Message> messages) throws IOException {
+    private void setProfile() {
+        imageHBox.getChildren().clear();
+        byte[] decodeImage = EncodeDecodeFile.decode(thisChat.getReceiverImageByes());
+        Image image = new Image(new ByteArrayInputStream(decodeImage));
+        ImageView pic = new ImageView();
+        pic.setFitWidth(config.getProperty(Integer.class, "imageWidthInChat"));
+        pic.setFitHeight(config.getProperty(Integer.class, "imageHeightInChat"));
+        pic.setImage(image);
+        imageHBox.getChildren().add(pic);
+        nameLabel.setText(thisChat.getReceiverName());
+    }
 
+    private void setPage(ArrayList<Message> messages) {
+        chatBox.clear();
+        String text = "";
+        for (Message message : messages) {
+            text  += getMessage(message);
+        }
+        chatBox.setText(text);
+    }
+
+    private String getMessage(Message message){
+        String text = message.getSenderId();
+        text += "\n";
+        if (message.getMessageType() == MessageType.FILE){
+            text += "YOU HAVE A FILE!" + "\n" + "DOWNLOAD IT";
+        }else {
+            text += message.getMessageText();
+        }
+        text += "\n";
+        return text;
     }
 
     public void sendText(ActionEvent actionEvent) throws IOException {
         String text = newText.getText();
-        Message message = new Message(text, MessageType.TEXT, senderUsername, receiverUsername, FileType.NOTHING);
-        Response response = client.getServerController().sendNewMessage(message);
+
     }
 
     public void sendMedia(ActionEvent actionEvent) throws IOException {
@@ -84,18 +146,16 @@ public class ChatPvController implements Initializable {
             }
         }
         String text = EncodeDecodeFile.byteArrayToString(byteArray);
-        FileType fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
-        Message message = new Message(text, MessageType.FILE, senderUsername, receiverUsername, fileType);
-        Response response = client.getServerController().sendNewMessage(message);
+        String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
+
     }
 
-    public void downloadNewMedia(ActionEvent actionEvent) throws IOException {
-        Response response = client.getServerController().sendGetAllMessagesRequest(senderUsername, receiverUsername);
-        ArrayList<Message> messages = (ArrayList<Message>) response.getData("messages");
+    public void downloadAllMedia(ActionEvent actionEvent) throws IOException {
+        ArrayList<Message> messages = thisChat.getMessages();
         for (int i = 0; i < messages.size(); i++) {
             Message message = messages.get(i);
-            if (message.getType() == MessageType.FILE) {
-                EncodeDecodeFile.downloadFileAndSave(message.getMessage(), message.getFileType());
+            if (message.getMessageType() == MessageType.FILE) {
+                EncodeDecodeFile.downloadFileAndSave(message.getMessageText(), message.getFileType());
             }
         }
 
@@ -103,5 +163,15 @@ public class ChatPvController implements Initializable {
 
     public void refresh(ActionEvent actionEvent) throws IOException {
         ServerController.reconnect();
+    }
+
+    public void backEduGram(ActionEvent actionEvent) throws IOException {
+        String page = config.getProperty(String.class, "eduGramPage");
+        OpenPage.openNewPage(actionEvent, page);
+    }
+
+    public void logout(ActionEvent actionEvent) throws IOException {
+        String page = config.getProperty(String.class, "loginPage");
+        OpenPage.openNewPage(actionEvent, page);
     }
 }
