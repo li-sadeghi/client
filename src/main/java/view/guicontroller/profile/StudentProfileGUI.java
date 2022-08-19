@@ -167,6 +167,9 @@ public class StudentProfileGUI implements Initializable {
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
         String page = config.getProperty(String.class, "studentMainMenu");
+        if (isMohseni){
+            page = config.getProperty(String.class, "mohseniPage");
+        }
         OpenPage.openNewPage(actionEvent, page);
     }
 

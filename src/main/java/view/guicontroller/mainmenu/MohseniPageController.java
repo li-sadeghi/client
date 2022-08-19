@@ -178,6 +178,6 @@ public class MohseniPageController implements Initializable {
         StudentProfileGUI.isMohseni = true;
         StudentProfileGUI.studentUsername = student.getUsername();
         String page = config.getProperty(String.class, "studentProfile");
-        OpenPage.openNewPage(new Stage(), page);
+        OpenPage.openNewPage(actionEvent, page);
     }
 }

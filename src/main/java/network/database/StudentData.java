@@ -3,6 +3,7 @@ package network.database;
 import network.Client;
 import network.ServerController;
 import response.Response;
+import sharedmodels.chatroom.Chat;
 import sharedmodels.department.Course;
 import sharedmodels.department.PassedCourse;
 import sharedmodels.department.TemporaryCourse;
@@ -17,6 +18,8 @@ public class StudentData {
     public static SharedStudent student;
     public static ArrayList<Course> courses;
     public static ArrayList<SharedMaster> masters;
+    public static ArrayList<Chat> chats;
+    public static ArrayList<SharedStudent> students;
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllStudentData(Client.clientUsername);
