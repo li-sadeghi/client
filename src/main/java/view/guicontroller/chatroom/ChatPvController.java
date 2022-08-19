@@ -111,7 +111,7 @@ public class ChatPvController implements Initializable {
         String text = message.getSenderId();
         text += "\n";
         if (message.getMessageType() == MessageType.FILE){
-            text += "YOU HAVE A FILE!" + "\n" + "DOWNLOAD IT";
+            text += "YOU HAVE A FILE!" + "\n" + "DOWNLOAD IT.";
         }else {
             text += message.getMessageText();
         }
@@ -121,7 +121,7 @@ public class ChatPvController implements Initializable {
 
     public void sendText(ActionEvent actionEvent) throws IOException {
         String text = newText.getText();
-
+        client.getServerController().sendNewMessage(thisChat.getSenderId(), thisChat.getReceiverId(), text, MessageType.TEXT);
     }
 
     public void sendMedia(ActionEvent actionEvent) throws IOException {
@@ -148,6 +148,7 @@ public class ChatPvController implements Initializable {
         String text = EncodeDecodeFile.byteArrayToString(byteArray);
         String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
 
+        //TODO
     }
 
     public void downloadAllMedia(ActionEvent actionEvent) throws IOException {

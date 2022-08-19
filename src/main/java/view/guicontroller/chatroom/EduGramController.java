@@ -108,9 +108,17 @@ public class EduGramController implements Initializable {
                 ChatPvController.thisChat = chatsSelected.get(0);
                 String receiverId = chatsSelected.get(0).getReceiverId();
                 int index = 0;
-                for (int i = 0; i < StudentData.chats.size(); i++) {
-                    if (StudentData.chats.get(i).getReceiverId().equals(receiverId)){
-                        index = i;
+                if (Client.clientType.equals(config.getProperty(String.class, "studentType"))){
+                    for (int i = 0; i < StudentData.chats.size(); i++) {
+                        if (StudentData.chats.get(i).getReceiverId().equals(receiverId)){
+                            index = i;
+                        }
+                    }
+                }else {
+                    for (int i = 0; i < MasterData.chats.size(); i++) {
+                        if (MasterData.chats.get(i).getReceiverId().equals(receiverId)){
+                            index = i;
+                        }
                     }
                 }
                 ChatPvController.indexOfChat = index;
