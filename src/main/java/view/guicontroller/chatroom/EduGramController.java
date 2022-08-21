@@ -175,9 +175,6 @@ public class EduGramController implements Initializable {
             }
         });
 
-
-
-
     }
 
 

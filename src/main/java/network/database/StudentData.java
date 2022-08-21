@@ -27,6 +27,8 @@ public class StudentData {
     public static ArrayList<TemporaryCourse> temporaryCourses;
     public static ArrayList<PassedCourse> passedCourses;
     public static ArrayList<Course> coursesHave;
+    public static ArrayList<Course> starredCourses ;
+    public static ArrayList<Course> suggestedCourses ;
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllStudentData(Client.clientUsername);
@@ -42,6 +44,8 @@ public class StudentData {
         //temporary = ...
         //passedCourses =...
         //coursesHave = ...
+        //starredCourses = ...
+        //suggestedCourses = ...
         MessageToAdmin.loadAndSendMessages();
     }
 }

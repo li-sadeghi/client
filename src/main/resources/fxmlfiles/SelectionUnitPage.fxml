@@ -22,14 +22,16 @@
          </font>
       </Label>
       <Label layoutX="92.0" layoutY="94.0" text="All Courses" />
-      <TextField layoutX="182.0" layoutY="90.0" promptText="department filter" />
+      <TextField fx:id="departmentFilter" layoutX="182.0" layoutY="90.0" promptText="department filter" />
       <Label layoutX="527.0" layoutY="94.0" text="Suggested Courses" />
-      <Button layoutX="92.0" layoutY="504.0" mnemonicParsing="false" text="Catch" />
-      <Button layoutX="156.0" layoutY="504.0" mnemonicParsing="false" text="Remove" />
+      <Button layoutX="92.0" layoutY="504.0" mnemonicParsing="false" onAction="#catchCourse" text="Catch" />
+      <Button layoutX="156.0" layoutY="504.0" mnemonicParsing="false" onAction="#removeCourse" text="Remove" />
       <Label fx:id="noticeLabel" layoutX="101.0" layoutY="555.0" text="Label" textFill="#d10a0a" visible="false">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
+      <Button layoutX="231.0" layoutY="504.0" mnemonicParsing="false" onAction="#starCourse" text="Star" />
+      <Button layoutX="280.0" layoutY="504.0" mnemonicParsing="false" onAction="#removeStarCourse" text="Remove Star" />
    </children>
 </AnchorPane>
