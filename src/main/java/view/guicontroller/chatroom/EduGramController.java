@@ -1,7 +1,6 @@
 package view.guicontroller.chatroom;
 
 import config.Config;
-import extra.StringMatcher;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,9 +20,7 @@ import network.database.MasterData;
 import network.database.StudentData;
 import sharedmodels.chatroom.Chat;
 import sharedmodels.chatroom.MessageType;
-import sharedmodels.department.Course;
 import sharedmodels.users.SharedStudent;
-import sharedmodels.users.SharedUser;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
@@ -61,6 +58,12 @@ public class EduGramController implements Initializable {
     Label sentNoticeLabel;
     @FXML
     AnchorPane background;
+    @FXML
+    TextField idRequestField;
+    @FXML
+    TextArea messageRequest;
+    @FXML
+    Label requestNotice;
 
 
     @Override
@@ -77,7 +80,7 @@ public class EduGramController implements Initializable {
                 }else {
                     counter = MasterMainMenuGUI.counter;
                     chats = MasterData.chats;
-                    students = MasterData.studentsHelper;
+                    students = MasterData.students;
                 }
                 Theme.setTheme(counter, background);
                 setPage();
@@ -204,5 +207,16 @@ public class EduGramController implements Initializable {
 
     public void refresh(ActionEvent actionEvent) throws IOException {
         ServerController.reconnect();
+    }
+
+    public void sendRequest(ActionEvent actionEvent) {
+        String requestSender = Client.clientUsername;
+        String requestReceiver =idRequestField.getText();
+        String message = messageRequest.getText();
+        //TODO
+        //send request for message
+        requestNotice.setVisible(true);
+        idRequestField.clear();
+        messageRequest.clear();
     }
 }

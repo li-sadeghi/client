@@ -19,7 +19,9 @@ import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
 import network.database.StudentData;
+import network.offline.MessageToAdmin;
 import sharedmodels.chatroom.MessageType;
+import sharedmodels.users.Licence;
 import sharedmodels.users.SharedStudent;
 import sharedmodels.users.StudentGrade;
 import time.DateAndTime;
@@ -73,6 +75,8 @@ public class StudentMainMenuGUI implements Initializable {
     TextArea messageBox;
     @FXML
     Label errorLabel;
+    @FXML
+    Label selectUnitLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,6 +87,10 @@ public class StudentMainMenuGUI implements Initializable {
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 student = StudentData.student;
+                boolean isSelectionTime = DateAndTime.isSelectionUnitTime(student.getRegistrationTimeStart(), student.getRegistrationTimeEnd());
+                if (isSelectionTime && student.getRegistrationLicence() == Licence.ALLOWED){
+                    selectUnitLabel.setVisible(true);
+                }
                 setPageItems();
                 setSpecifications();
             }
@@ -163,13 +171,8 @@ public class StudentMainMenuGUI implements Initializable {
     public void setSpecifications() {
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, student);
         statusLabel.setText(student.getStatus().toString());
-        //TODO
-//        if (student.getHelperMaster() == null){
-//            helperMasterLabel.setText("none");
-//        }else {
-//            helperMasterLabel.setText(student.getHelperMaster().getFullName());
-//        }
-        regTimeLabel.setText(student.getRegistrationTime());
+        helperMasterLabel.setText(StudentData.helperMaster.getFullName());
+        regTimeLabel.setText("from " + student.getRegistrationTimeStart() + " to " + student.getRegistrationTimeEnd());
         licenseLabel.setText(student.getRegistrationLicence().toString());
     }
 
@@ -258,10 +261,14 @@ public class StudentMainMenuGUI implements Initializable {
         if (Client.isConnect) {
             client.getServerController().sendNewMessage(senderUsername, receiverUsername, text, MessageType.TEXT);
         } else {
-            //TODO
-            //message offline
+            MessageToAdmin.createNewMessageAndSave(text, senderUsername);
         }
         messageBox.clear();
         errorLabel.setVisible(true);
+    }
+
+    public void selectionUnitPage(MouseEvent mouseEvent) throws IOException {
+        String page = config.getProperty(String.class, "selectionUnitPage");
+        OpenPage.openNewPage(mouseEvent, page);
     }
 }

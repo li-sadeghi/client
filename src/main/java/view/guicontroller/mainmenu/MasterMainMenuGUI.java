@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
 import network.database.MasterData;
+import network.offline.MessageToAdmin;
 import sharedmodels.chatroom.MessageType;
 import sharedmodels.users.MasterRole;
 import sharedmodels.users.SharedMaster;
@@ -61,16 +62,19 @@ public class MasterMainMenuGUI implements Initializable {
     TextArea messageBox;
     @FXML
     Label errorLabel;
+    @FXML
+    Label setTimeLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 master = MasterData.master;
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 Theme.setTheme(counter, background);
                 if (master.getMasterRole() == MasterRole.EDUCATIONAL_ASSISTANT) {
+                    setTimeLabel.setVisible(true);
                     addNewUserLabel.setVisible(true);
                     educationalStatus.setVisible(true);
                 }
@@ -161,8 +165,7 @@ public class MasterMainMenuGUI implements Initializable {
         if (Client.isConnect) {
             client.getServerController().sendNewMessage(senderUsername, receiverUsername, text, MessageType.TEXT);
         } else {
-            //TODO
-            //message offline
+            MessageToAdmin.createNewMessageAndSave(text, senderUsername);
         }
         messageBox.clear();
         errorLabel.setVisible(true);
@@ -170,5 +173,10 @@ public class MasterMainMenuGUI implements Initializable {
 
     public void refresh(ActionEvent actionEvent) throws IOException {
         ServerController.reconnect();
+    }
+
+    public void setSelectionTimePage(MouseEvent mouseEvent) throws IOException {
+        String page = config.getProperty(String.class, "setSelectionTimePage");
+        OpenPage.openNewPage(mouseEvent, page);
     }
 }

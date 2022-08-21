@@ -2,6 +2,7 @@ package network.database;
 
 import network.Client;
 import network.ServerController;
+import network.offline.MessageToAdmin;
 import response.Response;
 import sharedmodels.chatroom.Chat;
 import sharedmodels.department.Course;
@@ -20,9 +21,12 @@ public class MasterData {
 
     public static ArrayList<PassedCourse> passedCourses;
     public static ArrayList<Chat> chats;
-    public static ArrayList<SharedStudent> studentsHelper;
+
+    //برای رییس و معاون دانشکده همه ی بچه های دانشکده و برای غیر، دانشجوهایی که استاد راهنمایشان هست
+    public static ArrayList<SharedStudent> students;
     public static ArrayList<SharedStudent> allStudents;
     public static void updateData() throws IOException {
+        MessageToAdmin.loadAndSendMessages();
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
         master = (SharedMaster) response.getData("user");
         courses = (ArrayList<Course>) response.getData("courses");

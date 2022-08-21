@@ -106,5 +106,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label fx:id="selectUnitLabel" layoutX="825.0" layoutY="237.0" onMouseClicked="#selectionUnitPage" text="Seletion Unit" visible="false" />
    </children>
 </AnchorPane>

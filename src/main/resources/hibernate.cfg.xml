@@ -1,0 +1,19 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <!--       database connection-->
+        <property name="connection.driver_class">org.sqlite.JDBC</property>
+        <property name="connection.url">jdbc:sqlite:./data/sqlite.db</property>
+
+        <!--        sql dialect-->
+        <property name="dialect">org.hibernate.dialect.SQLiteDialect</property>
+
+
+<!--                <property name="hbm2ddl.auto">create</property>-->
+
+        <property name="hbm2ddl.auto">update</property>
+
+        <mapping class="network.offline.OfflineMessage"/>
+
+
+    </session-factory>
+</hibernate-configuration>
