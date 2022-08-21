@@ -163,11 +163,12 @@ public class StudentMainMenuGUI implements Initializable {
     public void setSpecifications() {
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, student);
         statusLabel.setText(student.getStatus().toString());
-        if (student.getHelperMaster() == null){
-            helperMasterLabel.setText("none");
-        }else {
-            helperMasterLabel.setText(student.getHelperMaster().getFullName());
-        }
+        //TODO
+//        if (student.getHelperMaster() == null){
+//            helperMasterLabel.setText("none");
+//        }else {
+//            helperMasterLabel.setText(student.getHelperMaster().getFullName());
+//        }
         regTimeLabel.setText(student.getRegistrationTime());
         licenseLabel.setText(student.getRegistrationLicence().toString());
     }

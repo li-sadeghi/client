@@ -97,8 +97,6 @@ public class StudentProfileGUI implements Initializable {
         client = ServerController.client;
         if (isMohseni || !Client.isConnect) {
             counter = MohseniPageController.counter;
-            exitHyperLink.setVisible(false);
-            backMainMenuHyper.setVisible(false);
             changeEmailLabel.setVisible(false);
             changePhoneLabel.setVisible(false);
             emailTextField.setVisible(false);
@@ -136,6 +134,7 @@ public class StudentProfileGUI implements Initializable {
 
 
     public void setProfile(SharedStudent student)  {
+        userImageVBox.getChildren().clear();
         fullNameLabel.setText(student.getFullName());
         String nationalCode = student.getNationalCode();
         nationalCodeLabel.setText(nationalCode);
@@ -145,8 +144,9 @@ public class StudentProfileGUI implements Initializable {
         emailAddressLabel.setText(student.getEmailAddress());
         String average = Double.toString(student.getAverage());
         averageLabel.setText(average);
-        departmentLabel.setText(student.getDepartment().getName());
-        helperMasterLabel.setText(student.getHelperMaster().getFullName());
+        //TODO
+//        departmentLabel.setText(student.getDepartment().getName());
+//        helperMasterLabel.setText(student.getHelperMaster().getFullName());
         String enteringYear = student.getEnteringYear();
         enteringYearLabel.setText(enteringYear);
         gradeLabel.setText(student.getGrade().toString());

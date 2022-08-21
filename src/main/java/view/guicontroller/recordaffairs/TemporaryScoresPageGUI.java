@@ -70,7 +70,8 @@ public class TemporaryScoresPageGUI implements Initializable {
     }
 
     private void setPage() {
-        ArrayList<TemporaryCourse> temporaryCourses = student.getTemporaryCourses();
+        //TODO
+//        ArrayList<TemporaryCourse> temporaryCourses = student.getTemporaryCourses();
 
 
         coursesListVbox.getChildren().clear();
@@ -100,9 +101,11 @@ public class TemporaryScoresPageGUI implements Initializable {
         coursesTable.getColumns().addAll(nameColumn, idColumn, unit, markColumn, protest, protestAnswer);
 
 
-        for (TemporaryCourse temporaryCourse : temporaryCourses) {
-            coursesTable.getItems().add(temporaryCourse);
-        }
+        //TODO
+
+//        for (TemporaryCourse temporaryCourse : temporaryCourses) {
+//            coursesTable.getItems().add(temporaryCourse);
+//        }
 
         coursesListVbox.getChildren().add(coursesTable);
         coursesTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

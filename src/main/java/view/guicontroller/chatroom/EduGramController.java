@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import network.Client;
@@ -25,6 +26,9 @@ import sharedmodels.users.SharedStudent;
 import sharedmodels.users.SharedUser;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
+import view.guicontroller.Theme;
+import view.guicontroller.mainmenu.MasterMainMenuGUI;
+import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
 import java.net.URL;
@@ -55,6 +59,8 @@ public class EduGramController implements Initializable {
     TextArea messageBox;
     @FXML
     Label sentNoticeLabel;
+    @FXML
+    AnchorPane background;
 
 
     @Override
@@ -63,13 +69,17 @@ public class EduGramController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
+                int counter ;
                 if (Client.clientType.equals(config.getProperty(String.class, "studentType"))){
                     chats = StudentData.chats;
                     students = StudentData.students;
+                    counter = StudentMainMenuGUI.counter;
                 }else {
+                    counter = MasterMainMenuGUI.counter;
                     chats = MasterData.chats;
                     students = MasterData.studentsHelper;
                 }
+                Theme.setTheme(counter, background);
                 setPage();
             }
         }));
@@ -88,6 +98,7 @@ public class EduGramController implements Initializable {
         TableColumn<Chat, String> lastMessage = new TableColumn<>("Last message");
         lastMessage.setPrefWidth(350);
         lastMessage.setCellValueFactory(new PropertyValueFactory<>("lastMessage"));
+
 
         chatsTable.setPrefWidth(500);
         chatsTable.setPrefHeight(300);
@@ -135,13 +146,13 @@ public class EduGramController implements Initializable {
         usersTable = new TableView<>();
 
         TableColumn<SharedStudent, String> studentNameColumn = new TableColumn<>("Name");
-        nameColumn.setPrefWidth(200);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        studentNameColumn.setPrefWidth(200);
+        studentNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
 
         TableColumn<SharedStudent, String> studentIdColumn = new TableColumn<>("Student Id");
-        lastMessage.setPrefWidth(300);
-        lastMessage.setCellValueFactory(new PropertyValueFactory<>("username"));
+        studentIdColumn.setPrefWidth(300);
+        studentIdColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         usersTable.setPrefWidth(500);
         usersTable.setPrefHeight(300);
@@ -151,7 +162,7 @@ public class EduGramController implements Initializable {
             usersTable.getItems().add(student);
         }
 
-        usersVbox.getChildren().add(usersVbox);
+        usersVbox.getChildren().add(usersTable);
         usersTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         usersTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -160,6 +171,8 @@ public class EduGramController implements Initializable {
                 studentsSelected = usersTable.getSelectionModel().getSelectedItems();
             }
         });
+
+
 
 
     }
@@ -173,6 +186,7 @@ public class EduGramController implements Initializable {
             client.getServerController().sendNewMessage(senderId, receiverUsername, messageText, MessageType.TEXT );
         }
         sentNoticeLabel.setVisible(true);
+        messageBox.clear();
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {

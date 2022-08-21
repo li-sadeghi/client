@@ -23,11 +23,9 @@ import network.Client;
 import network.ServerController;
 import network.database.MasterData;
 import network.database.StudentData;
-import response.Response;
 import sharedmodels.chatroom.Chat;
 import sharedmodels.chatroom.Message;
 import sharedmodels.chatroom.MessageType;
-import sharedmodels.users.SharedStudent;
 import util.extra.EncodeDecodeFile;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
@@ -72,9 +70,9 @@ public class ChatPvController implements Initializable {
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 if (Client.clientType.equals(config.getProperty(String.class, "masterType"))){
-                    thisChat = StudentData.chats.get(indexOfChat);
-                }else {
                     thisChat = MasterData.chats.get(indexOfChat);
+                }else {
+                    thisChat = StudentData.chats.get(indexOfChat);
                 }
                 setProfile();
                 setPage(thisChat.getMessages());
@@ -108,10 +106,15 @@ public class ChatPvController implements Initializable {
     }
 
     private String getMessage(Message message){
-        String text = message.getSenderId();
+        String text = "";
+        if (message.getSenderId().equals(senderUsername)){
+            text += "YOU";
+        }else text += message.getSenderId();
+        text += ":\n";
+        text += message.getTime();
         text += "\n";
         if (message.getMessageType() == MessageType.FILE){
-            text += "YOU HAVE A FILE!" + "\n" + "DOWNLOAD IT.";
+            text += ("YOU HAVE A FILE!" + "\n" + "DOWNLOAD IT.");
         }else {
             text += message.getMessageText();
         }
@@ -122,6 +125,7 @@ public class ChatPvController implements Initializable {
     public void sendText(ActionEvent actionEvent) throws IOException {
         String text = newText.getText();
         client.getServerController().sendNewMessage(thisChat.getSenderId(), thisChat.getReceiverId(), text, MessageType.TEXT);
+        newText.clear();
     }
 
     public void sendMedia(ActionEvent actionEvent) throws IOException {

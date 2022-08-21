@@ -70,7 +70,7 @@ public class ListOfCoursesPageGUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        client = LoginGUI.client;
+        client = ServerController.client;
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override

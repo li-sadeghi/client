@@ -125,8 +125,7 @@ public class EditMasterPageGUI implements Initializable {
             if (masterRole.equals("M")) newMaster.setMasterRole(MasterRole.MASTER);
             else if (masterRole.equals("E")) newMaster.setMasterRole(MasterRole.EDUCATIONAL_ASSISTANT);
             else newMaster.setMasterRole(MasterRole.CHAIRMAN);
-            newMaster.setDepartment(new Department());
-            newMaster.setCourses(new ArrayList<>());
+            newMaster.setDepartmentId(departmentIdField.getText());
             newMaster.setMasterRole(MasterRole.MASTER);
             newMaster.setRoomNumber(roomNumber);
             newMaster.setNationalCode(nationalCode);

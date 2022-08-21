@@ -47,14 +47,14 @@
       <Label fx:id="emailAddressLabel" layoutX="400.0" layoutY="97.0" text="Email Address" />
       <Hyperlink layoutX="736.0" layoutY="71.0" onAction="#changeTheme" text="Change Theme" />
       <Button fx:id="refreshButton" layoutX="760.0" layoutY="157.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
-      <Label fx:id="connectionLabel" layoutX="762.0" layoutY="115.0" text="Label">
+      <Label fx:id="connectionLabel" layoutX="762.0" layoutY="115.0" text="Loading...">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label layoutX="119.0" layoutY="194.0" text="Search Students:" />
       <TextField fx:id="idField" layoutX="223.0" layoutY="190.0" promptText="student id" />
-      <VBox fx:id="studentsVbox" layoutX="9.0" layoutY="266.0" prefHeight="414.0" prefWidth="710.0" />
+      <VBox fx:id="studentsVbox" layoutX="9.0" layoutY="266.0" prefHeight="400.0" prefWidth="700.0" />
       <TextField fx:id="phoneField" layoutX="415.0" layoutY="190.0" promptText="phone number" />
       <TextField fx:id="nameField" layoutX="595.0" layoutY="190.0" promptText="name" />
       <TextArea fx:id="messageBox" layoutX="724.0" layoutY="250.0" prefHeight="200.0" prefWidth="200.0" />

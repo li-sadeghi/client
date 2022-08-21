@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class StudentData {
     public static Client client = ServerController.client;
     public static SharedStudent student;
-    public static ArrayList<Course> courses;
-    public static ArrayList<SharedMaster> masters;
-    public static ArrayList<Chat> chats;
-    public static ArrayList<SharedStudent> students;
+    public static ArrayList<Course> courses = new ArrayList<>();
+    public static ArrayList<SharedMaster> masters = new ArrayList<>();
+    public static ArrayList<Chat> chats = new ArrayList<>();
+    public static ArrayList<SharedStudent> students = new ArrayList<>();
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllStudentData(Client.clientUsername);
@@ -27,6 +27,8 @@ public class StudentData {
         courses = (ArrayList<Course>) response.getData("courses");
         masters = (ArrayList<SharedMaster>) response.getData("masters");
 
+        chats = (ArrayList<Chat>) response.getData("chats");
+        students = (ArrayList<SharedStudent>) response.getData("students");
         //get messages for show last 10 messages... by class Chat
     }
 }

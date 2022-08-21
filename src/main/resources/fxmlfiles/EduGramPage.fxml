@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.chatroom.EduGramController">
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.chatroom.EduGramController">
    <children>
       <Label layoutX="21.0" layoutY="350.0" text="List of users:" />
       <VBox fx:id="chatsVbox" layoutY="41.0" prefHeight="300.0" prefWidth="500.0" />
       <Label layoutX="28.0" layoutY="14.0" text="Your chats:" />
-      <VBox fx:id="usersVbox" layoutX="14.0" layoutY="368.0" prefHeight="300.0" prefWidth="500.0" />
-      <Button layoutX="475.0" layoutY="673.0" mnemonicParsing="false" onAction="#createChat" text="Create Chat" />
+      <VBox fx:id="usersVbox" layoutY="368.0" prefHeight="300.0" prefWidth="500.0" />
+      <Button layoutX="500.0" layoutY="673.0" mnemonicParsing="false" onAction="#createChat" text="Create Chat" />
       <Button fx:id="refreshButton" layoutX="770.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
       <Label fx:id="connectionLabel" layoutX="852.0" layoutY="17.0" text="Loading...">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextArea fx:id="messageBox" layoutX="475.0" layoutY="610.0" prefHeight="58.0" prefWidth="200.0" />
+      <TextArea fx:id="messageBox" layoutX="500.0" layoutY="609.0" prefHeight="58.0" prefWidth="200.0" />
       <Hyperlink fx:id="backMainMenuHyper" layoutX="817.0" layoutY="55.0" onAction="#backMainMenu" text="Back To Main Menu" />
       <Hyperlink fx:id="exitHyperLink" layoutX="860.0" layoutY="102.0" onAction="#logout" text="Exit" />
-      <Label fx:id="sentNoticeLabel" layoutX="575.0" layoutY="677.0" text="Your message sent successfully!" textFill="#0da960" visible="false">
+      <Label fx:id="sentNoticeLabel" layoutX="610.0" layoutY="677.0" text="Your message sent successfully!" textFill="#0da960" visible="false">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

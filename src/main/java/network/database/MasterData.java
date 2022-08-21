@@ -21,11 +21,15 @@ public class MasterData {
     public static ArrayList<PassedCourse> passedCourses;
     public static ArrayList<Chat> chats;
     public static ArrayList<SharedStudent> studentsHelper;
+    public static ArrayList<SharedStudent> allStudents;
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
         master = (SharedMaster) response.getData("user");
         courses = (ArrayList<Course>) response.getData("courses");
         masters = (ArrayList<SharedMaster>) response.getData("masters");
         passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
+        //TODO
+        //allStudents = ...
+
     }
 }

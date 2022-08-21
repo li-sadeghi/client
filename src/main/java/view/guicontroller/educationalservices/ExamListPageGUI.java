@@ -56,12 +56,13 @@ public class ExamListPageGUI implements Initializable {
                 String type = Client.clientType;
                 int counter = 0;
                 if (type.equals(config.getProperty(String.class, "studentType"))) {
-                    ArrayList<Course> courses = StudentData.student.getCourses();
-                    setExamList(courses);
-                    counter = StudentMainMenuGUI.counter;
+                    //TODO
+//                    ArrayList<Course> courses = StudentData.student.getCourses();
+//                    setExamList(courses);
+//                    counter = StudentMainMenuGUI.counter;
                 } else {
-                    ArrayList<Course> courses = MasterData.master.getCourses();
-                    setExamList(courses);
+//                    ArrayList<Course> courses = MasterData.master.getCourses();
+//                    setExamList(courses);
                     //TODO
 //                    counter = MasterMainMenuGUI.counter;
                 }

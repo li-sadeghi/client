@@ -150,8 +150,7 @@ public class AddNewUserPageGUI implements Initializable {
             if (masterRole.equals("M")) newMaster.setMasterRole(MasterRole.MASTER);
             else if (masterRole.equals("E")) newMaster.setMasterRole(MasterRole.EDUCATIONAL_ASSISTANT);
             else newMaster.setMasterRole(MasterRole.CHAIRMAN);
-            newMaster.setDepartment(new Department());
-            newMaster.setCourses(new ArrayList<>());
+            newMaster.setCoursesId(new ArrayList<>());
             newMaster.setMasterRole(MasterRole.MASTER);
             newMaster.setRoomNumber(roomNumber);
             newMaster.setNationalCode(nationalCode);
@@ -197,11 +196,7 @@ public class AddNewUserPageGUI implements Initializable {
             newStudent.setUserImageBytes(imageBytes);
             newStudent.setAverage(0);
             newStudent.setUnits(0);
-            newStudent.setDepartment(new Department());
             newStudent.setStatus(EducationalStatus.STUDYING);
-            newStudent.setCourses(new ArrayList<>());
-            newStudent.setPassedCourses(new ArrayList<>());
-            newStudent.setTemporaryCourses(new ArrayList<>());
             newStudent.setEmailAddress(email);
             newStudent.setEnteringYear(entering);
             if (grade.equals("U")) {

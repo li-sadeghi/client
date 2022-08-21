@@ -59,7 +59,7 @@ public class LoginGUI implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Theme.setTheme(2, background);
         try {
-            setCaptchaImage();
+                setCaptchaImage();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -112,11 +112,28 @@ public class LoginGUI implements Initializable {
                 SharedUser user = (SharedUser) response.getData("user");
                 login(user, actionEvent);
             } else if (response.getStatus() == ResponseStatus.TIME_LIMIT) {
+                SharedUser user = (SharedUser) response.getData("user");
+                setRole(user);
                 timeline.stop();
                 openChangePassPage((SharedUser) response.getData("user"), actionEvent);
             } else {
                 showError(response.getErrorMessage());
             }
+        }
+    }
+
+    public void setRole(SharedUser user){
+        if (user.getRole() == Role.STUDENT){
+            Client.clientType = config.getProperty(String.class, "studentType");;
+        }
+        else if (user.getRole() == Role.MASTER){
+            Client.clientType = config.getProperty(String.class, "masterType");
+        }
+        else if (user.getRole() == Role.EDU_ADMIN) {
+            Client.clientType = config.getProperty(String.class, "adminType");
+        }
+        else if (user.getRole() == Role.MR_MOHSENI){
+            Client.clientType = config.getProperty(String.class, "mohseniType");
         }
     }
 

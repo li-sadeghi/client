@@ -48,7 +48,7 @@
          </font>
       </Label>
       <Button fx:id="refreshButton" layoutX="21.0" layoutY="350.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" visible="false" />
-      <Label fx:id="connectionLabel" layoutX="471.0" layoutY="126.0" text="Label">
+      <Label fx:id="connectionLabel" layoutX="471.0" layoutY="126.0" text="Loading...">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

@@ -85,6 +85,7 @@ public class MasterProfileGUI implements Initializable {
     }
 
     public void setProfile(SharedMaster master)  {
+        userImageVBox.getChildren().clear();
         fullNameLabel.setText(master.getFullName());
         String nationalCode = master.getNationalCode();
         nationalCodeLabel.setText(nationalCode);
@@ -92,7 +93,8 @@ public class MasterProfileGUI implements Initializable {
         String phoneNumber = master.getPhoneNumber();
         phoneNumberLabel.setText(phoneNumber);
         emailAddressLabel.setText(master.getEmailAddress());
-        departmentLabel.setText(master.getDepartment().getName());
+        //TODO
+//        departmentLabel.setText(master.getDepartment().getName());
         gradeLabel.setText(master.getGrade().toString());
         roomNumberLabel.setText(master.getRoomNumber());
         byte[] decodeImage = EncodeDecodeFile.decode(master.getUserImageBytes());
