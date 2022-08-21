@@ -267,4 +267,29 @@ public class ServerController {
         request.addData("message", message);
         sendRequest(request);
     }
+
+    public Response starNewCourse(String clientUsername, String courseId) throws IOException {
+        Request request = new Request(RequestType.STAR_COURSE);
+        request.addData("username", clientUsername);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response catchNewCourse(String clientUsername, String courseId) throws IOException {
+        Request request = new Request(RequestType.CATCH_COURSE);
+        request.addData("username", clientUsername);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+        return getResponse();
+
+    }
+
+    public Response removeCourse(String clientUsername, String courseId) throws IOException {
+        Request request = new Request(RequestType.REMOVE_COURSE);
+        request.addData("username", clientUsername);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+        return getResponse();
+    }
 }

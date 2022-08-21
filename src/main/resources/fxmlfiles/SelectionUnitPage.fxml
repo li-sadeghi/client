@@ -31,7 +31,11 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button layoutX="231.0" layoutY="504.0" mnemonicParsing="false" onAction="#starCourse" text="Star" />
-      <Button layoutX="280.0" layoutY="504.0" mnemonicParsing="false" onAction="#removeStarCourse" text="Remove Star" />
+      <Button layoutX="231.0" layoutY="504.0" mnemonicParsing="false" onAction="#starCourse" text="Star/Remove Star" />
+      <Label fx:id="userNoticeLabel" layoutX="142.0" layoutY="556.0" text="Label" textFill="#a10d0d" visible="false">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

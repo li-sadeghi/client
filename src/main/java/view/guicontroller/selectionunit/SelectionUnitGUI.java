@@ -19,6 +19,7 @@ import network.Client;
 import network.ServerController;
 import network.database.MasterData;
 import network.database.StudentData;
+import response.Response;
 import sharedmodels.department.Course;
 import sharedmodels.users.MasterRole;
 import sharedmodels.users.SharedMaster;
@@ -56,6 +57,8 @@ public class SelectionUnitGUI implements Initializable {
     VBox coursesVbox;
     @FXML
     VBox suggestionVbox;
+    @FXML
+    Label userNoticeLabel;
 
 
     @Override
@@ -179,19 +182,27 @@ public class SelectionUnitGUI implements Initializable {
         }
         return false;
     }
-    public void starCourse(ActionEvent actionEvent) {
-        //TODO
+    public void starCourse(ActionEvent actionEvent) throws IOException {
+        Course courseSelected = coursesSelected.get(0);
+        Response response = client.getServerController().starNewCourse(Client.clientUsername, courseSelected.getId());
+        String error = response.getErrorMessage();
+        userNoticeLabel.setText(error);
+        userNoticeLabel.setVisible(true);
+    }
+    public void catchCourse(ActionEvent actionEvent) throws IOException {
+        Course courseSelected = coursesSelected.get(0);
+        Response response = client.getServerController().catchNewCourse(Client.clientUsername, courseSelected.getId());
+        String error = response.getErrorMessage();
+        userNoticeLabel.setText(error);
+        userNoticeLabel.setVisible(true);
     }
 
-    public void removeStarCourse(ActionEvent actionEvent) {
-        //TODO
-    }
-    public void catchCourse(ActionEvent actionEvent) {
-        //TODO
-    }
-
-    public void removeCourse(ActionEvent actionEvent) {
-        //TODO
+    public void removeCourse(ActionEvent actionEvent) throws IOException {
+        Course courseSelected = coursesSelected.get(0);
+        Response response = client.getServerController().removeCourse(Client.clientUsername, courseSelected.getId());
+        String error = response.getErrorMessage();
+        userNoticeLabel.setText(error);
+        userNoticeLabel.setVisible(true);
     }
 
 
