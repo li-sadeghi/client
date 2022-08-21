@@ -32,10 +32,12 @@ import view.guicontroller.CheckConnection;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class ChatPvController implements Initializable {
@@ -152,7 +154,7 @@ public class ChatPvController implements Initializable {
         String text = EncodeDecodeFile.byteArrayToString(byteArray);
         String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
 
-        //TODO
+        client.getServerController().sendNewFileMessage(senderUsername, receiverUsername, text, MessageType.FILE, fileType);
     }
 
     public void downloadAllMedia(ActionEvent actionEvent) throws IOException {
@@ -160,10 +162,21 @@ public class ChatPvController implements Initializable {
         for (int i = 0; i < messages.size(); i++) {
             Message message = messages.get(i);
             if (message.getMessageType() == MessageType.FILE) {
-                EncodeDecodeFile.downloadFileAndSave(message.getMessageText(), message.getFileType());
+                downloadFileAndSave(message.getMessageText(), message.getFileType());
             }
         }
 
+    }
+
+    private void downloadFileAndSave(String encoded, String fileType) throws IOException {
+        byte[] decoded = EncodeDecodeFile.decode(encoded);
+        String path = "./src/main/resources/downloadedfiles/" + new Random().nextLong() + "." + fileType ;
+        File file = new File(path);
+        file.createNewFile();
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(decoded);
+        fileOutputStream.close();
+        fileOutputStream.flush();
     }
 
     public void refresh(ActionEvent actionEvent) throws IOException {

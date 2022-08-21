@@ -130,8 +130,7 @@ public class SetSelectionTimePageGUI implements Initializable {
         String startTime = startTimeField.getText();
         String endTime = endTimeField.getText();
         for (SharedStudent student : studentsSelected) {
-            //TODO
-            //ثبت زمان شروع و پایان برای هر استیودنت یعنی ریکوعست به سرور
+            client.getServerController().setSelectionTime(student.getUsername(), startTime, endTime);
         }
         noticeLabel.setVisible(true);
         startTimeField.clear();

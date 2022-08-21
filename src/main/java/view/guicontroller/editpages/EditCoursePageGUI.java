@@ -26,6 +26,7 @@ import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.LoginGUI;
 import view.guicontroller.Theme;
+import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
@@ -75,9 +76,7 @@ public class EditCoursePageGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         client = ServerController.client;
-        //TODO
-        int counter = 0;
-//        int counter = MasterMainMenuGUI.counter;
+        int counter = MasterMainMenuGUI.counter;
         Theme.setTheme(counter, background);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override

@@ -26,6 +26,7 @@ import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.LoginGUI;
 import view.guicontroller.Theme;
+import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
@@ -81,12 +82,11 @@ public class ListOfMastersPageGUI implements Initializable {
                     SharedMaster master = MasterData.master;
                     if (master.getMasterRole() == MasterRole.CHAIRMAN) setPage();
                 }
-                int counter = 0;
+                int counter;
                 if (LoginGUI.type.equals(config.getProperty(String.class, "studentType"))) {
                     counter = StudentMainMenuGUI.counter;
                 } else {
-                    //TODO
-//            counter = MasterMainMenuGUI.counter;
+                    counter = MasterMainMenuGUI.counter;
                 }
                 Theme.setTheme(counter, background);
                 setMastersList();

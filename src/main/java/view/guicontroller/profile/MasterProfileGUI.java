@@ -93,8 +93,7 @@ public class MasterProfileGUI implements Initializable {
         String phoneNumber = master.getPhoneNumber();
         phoneNumberLabel.setText(phoneNumber);
         emailAddressLabel.setText(master.getEmailAddress());
-        //TODO
-//        departmentLabel.setText(master.getDepartment().getName());
+        departmentLabel.setText(MasterData.department.getName());
         gradeLabel.setText(master.getGrade().toString());
         roomNumberLabel.setText(master.getRoomNumber());
         byte[] decodeImage = EncodeDecodeFile.decode(master.getUserImageBytes());

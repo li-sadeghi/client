@@ -6,6 +6,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import request.Request;
 import request.RequestType;
 import response.Response;
+import sharedmodels.chatroom.Message;
 import sharedmodels.chatroom.MessageType;
 import sharedmodels.department.Course;
 import sharedmodels.users.SharedMaster;
@@ -245,5 +246,25 @@ public class ServerController {
         request.addData("protestTex", protestTex);
         sendRequest(request);
         return getResponse();
+    }
+
+    public void setSelectionTime(String username, String startTime, String endTime) {
+        Request request = new Request(RequestType.SET_SELECTION_TIME);
+        request.addData("username", username);
+        request.addData("startTime", startTime);
+        request.addData("endTime", endTime);
+        sendRequest(request);
+    }
+
+    public void sendNewFileMessage(String senderUsername, String receiverUsername, String text, MessageType file, String fileType) {
+        Request request = new Request(RequestType.FILE_MESSAGE);
+        Message message = new Message();
+        message.setMessageText(text);
+        message.setFileType(fileType);
+        message.setMessageType(MessageType.FILE);
+        message.setSenderId(senderUsername);
+        message.setReceiverId(receiverUsername);
+        request.addData("message", message);
+        sendRequest(request);
     }
 }

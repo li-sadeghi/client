@@ -6,7 +6,9 @@ import network.offline.MessageToAdmin;
 import response.Response;
 import sharedmodels.chatroom.Chat;
 import sharedmodels.department.Course;
+import sharedmodels.department.Department;
 import sharedmodels.department.PassedCourse;
+import sharedmodels.department.TemporaryCourse;
 import sharedmodels.users.SharedMaster;
 import sharedmodels.users.SharedStudent;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class MasterData {
     public static Client client = ServerController.client;
     public static SharedMaster master;
+    public static Department department;
     public static ArrayList<Course> courses;
     public static ArrayList<SharedMaster> masters;
 
@@ -25,6 +28,9 @@ public class MasterData {
     //برای رییس و معاون دانشکده همه ی بچه های دانشکده و برای غیر، دانشجوهایی که استاد راهنمایشان هست
     public static ArrayList<SharedStudent> students;
     public static ArrayList<SharedStudent> allStudents;
+    public static ArrayList<TemporaryCourse> temporaryCourses;
+    public static ArrayList<Course> coursesHave;
+
     public static void updateData() throws IOException {
         MessageToAdmin.loadAndSendMessages();
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
@@ -34,6 +40,8 @@ public class MasterData {
         passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
         //TODO
         //allStudents = ...
-
+        //department = ...
+        //temporary = ...
+        //coursesHave = ...
     }
 }

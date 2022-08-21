@@ -78,8 +78,7 @@ public class EducationalStatusPageGUI implements Initializable {
     private void setPage()  {
         ArrayList<PassedCourse> passedCourses;
         if (Client.clientType.equals(config.getProperty(String.class, "studentType"))){
-            //TODO
-//            passedCourses = StudentData.student.getPassedCourses();
+            passedCourses = StudentData.passedCourses;
         }else {
             passedCourses = MasterData.passedCourses;
         }
@@ -105,20 +104,18 @@ public class EducationalStatusPageGUI implements Initializable {
         coursesTable.setPrefHeight(400);
         coursesTable.getColumns().addAll(nameColumn, idColumn, unit, markColumn);
 
-            //TODO
-//        for (PassedCourse passedCourse : passedCourses) {
-//            String name = passedCourse.getName();
-//            String id = passedCourse.getCourseId();
-//            boolean nameOk = StringMatcher.isOk(idFilter.getText(), id);
-//            boolean idOk = StringMatcher.isOk(nameFilter.getText(), name);
-//            if (idOk && nameOk){
-//                coursesTable.getItems().add(passedCourse);
-//            }
-//        }
+        for (PassedCourse passedCourse : passedCourses) {
+            String name = passedCourse.getName();
+            String id = passedCourse.getCourseId();
+            boolean nameOk = StringMatcher.isOk(idFilter.getText(), id);
+            boolean idOk = StringMatcher.isOk(nameFilter.getText(), name);
+            if (idOk && nameOk){
+                coursesTable.getItems().add(passedCourse);
+            }
+        }
 
         coursesListVbox.getChildren().add(coursesTable);
         coursesTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {

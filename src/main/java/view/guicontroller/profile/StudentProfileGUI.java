@@ -144,9 +144,8 @@ public class StudentProfileGUI implements Initializable {
         emailAddressLabel.setText(student.getEmailAddress());
         String average = Double.toString(student.getAverage());
         averageLabel.setText(average);
-        //TODO
-//        departmentLabel.setText(student.getDepartment().getName());
-//        helperMasterLabel.setText(student.getHelperMaster().getFullName());
+        departmentLabel.setText(StudentData.department.getName());
+        helperMasterLabel.setText(StudentData.helperMaster.getFullName());
         String enteringYear = student.getEnteringYear();
         enteringYearLabel.setText(enteringYear);
         gradeLabel.setText(student.getGrade().toString());

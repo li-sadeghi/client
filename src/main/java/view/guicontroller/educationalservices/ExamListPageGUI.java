@@ -26,6 +26,7 @@ import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.LoginGUI;
 import view.guicontroller.Theme;
+import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
@@ -56,15 +57,13 @@ public class ExamListPageGUI implements Initializable {
                 String type = Client.clientType;
                 int counter = 0;
                 if (type.equals(config.getProperty(String.class, "studentType"))) {
-                    //TODO
-//                    ArrayList<Course> courses = StudentData.student.getCourses();
-//                    setExamList(courses);
-//                    counter = StudentMainMenuGUI.counter;
+                    ArrayList<Course> courses = StudentData.coursesHave;
+                    setExamList(courses);
+                    counter = StudentMainMenuGUI.counter;
                 } else {
-//                    ArrayList<Course> courses = MasterData.master.getCourses();
-//                    setExamList(courses);
-                    //TODO
-//                    counter = MasterMainMenuGUI.counter;
+                    ArrayList<Course> courses = MasterData.coursesHave;
+                    setExamList(courses);
+                    counter = MasterMainMenuGUI.counter;
                 }
                 Theme.setTheme(counter, background);
             }
