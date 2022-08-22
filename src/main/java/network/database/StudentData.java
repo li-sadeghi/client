@@ -39,7 +39,6 @@ public class StudentData {
         chats = (ArrayList<Chat>) response.getData("chats");
         students = (ArrayList<SharedStudent>) response.getData("students");
         helperMaster = (SharedMaster) response.getData("helperMaster");
-        //TODO
 
         department = (Department) response.getData("department");
         temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");

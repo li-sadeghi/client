@@ -120,7 +120,7 @@ public class ChatPvController implements Initializable {
         }else {
             text += message.getMessageText();
         }
-        text += "\n";
+        text += "\n\n";
         return text;
     }
 

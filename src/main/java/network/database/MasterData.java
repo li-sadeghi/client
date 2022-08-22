@@ -38,10 +38,11 @@ public class MasterData {
         courses = (ArrayList<Course>) response.getData("courses");
         masters = (ArrayList<SharedMaster>) response.getData("masters");
         passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
-        //TODO
-        //allStudents = ...
-        //department = ...
-        //temporary = ...
-        //coursesHave = ...
+        students = (ArrayList<SharedStudent>) response.getData("students");
+        chats = (ArrayList<Chat>) response.getData("chats");
+        allStudents = (ArrayList<SharedStudent>) response.getData("allStudents");
+        department = (Department) response.getData("department");
+        temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
+        coursesHave = (ArrayList<Course>) response.getData("coursesHave");
     }
 }

@@ -1,11 +1,11 @@
-2022-08-22 00:37:19.673 [Thread-3] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.14.Final
-2022-08-22 00:37:19.962 [Thread-3] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2022-08-22 00:37:20.083 [Thread-3] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
-2022-08-22 00:37:20.113 [Thread-3] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
-2022-08-22 00:37:20.117 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:./data/sqlite.db]
-2022-08-22 00:37:20.117 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {}
-2022-08-22 00:37:20.117 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
-2022-08-22 00:37:20.120 [Thread-3] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
-2022-08-22 00:37:20.206 [Thread-3] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
-2022-08-22 00:37:20.678 [Thread-3] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@793ccfdd] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-2022-08-22 00:37:20.688 [Thread-3] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-08-22 13:27:08.037 [Thread-3] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.14.Final
+2022-08-22 13:27:08.500 [Thread-3] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2022-08-22 13:27:08.681 [Thread-3] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
+2022-08-22 13:27:08.721 [Thread-3] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2022-08-22 13:27:08.726 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.sqlite.JDBC] at URL [jdbc:sqlite:./data/sqlite.db]
+2022-08-22 13:27:08.726 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {}
+2022-08-22 13:27:08.726 [Thread-3] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+2022-08-22 13:27:08.728 [Thread-3] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+2022-08-22 13:27:08.830 [Thread-3] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLiteDialect
+2022-08-22 13:27:09.611 [Thread-3] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@762b0ea] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2022-08-22 13:27:09.629 [Thread-3] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
