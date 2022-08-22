@@ -26,6 +26,7 @@ import network.database.StudentData;
 import response.Response;
 import sharedmodels.cw.HomeWork;
 import sharedmodels.department.Course;
+import time.DateAndTime;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
@@ -60,6 +61,8 @@ public class CwCoursePageGUI implements Initializable {
     Label connectionLabel;
     @FXML
     Label courseNameLabel;
+    @FXML
+    Label noticeLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -148,6 +151,21 @@ public class CwCoursePageGUI implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 homeworksSelected = homeworksTable.getSelectionModel().getSelectedItems();
+                HomeWork homeWork = homeworksSelected.get(0);
+                String startTime = homeWork.getStartTime();
+                String endTime = homeWork.getEndTime();
+                if (DateAndTime.isSelectionUnitTime(startTime, endTime)){
+                    HomeWorkPageGUI.homeWork = homeWork;
+                    HomeWorkPageGUI.isMaster = isMaster;
+                    String page = config.getProperty(String.class, "homeWorkPage");
+                    try {
+                        OpenPage.openNewPage(event, page);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }else {
+                    noticeLabel.setVisible(true);
+                }
             }
         });
 

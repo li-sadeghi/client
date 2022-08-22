@@ -32,5 +32,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="noticeLabel" layoutX="218.0" layoutY="551.0" text="Deadline is over!" textFill="#990000">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

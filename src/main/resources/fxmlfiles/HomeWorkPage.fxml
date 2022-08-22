@@ -3,7 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 
@@ -20,6 +22,34 @@
       <Label layoutX="435.0" layoutY="62.0" text="Courseware" textFill="#ac0404">
          <font>
             <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="67.0" layoutY="205.0" text="Home Work Name:" />
+      <Label layoutX="71.0" layoutY="251.0" text="Home Work File:" />
+      <Button layoutX="214.0" layoutY="247.0" mnemonicParsing="false" text="Download" />
+      <Label fx:id="nameLabel" layoutX="215.0" layoutY="205.0" text="Loading..." />
+      <Label layoutX="77.0" layoutY="313.0" text="Upload Your Answer:" />
+      <Button layoutX="213.0" layoutY="309.0" mnemonicParsing="false" text="Upload" />
+      <Label fx:id="downloadNotice" layoutX="318.0" layoutY="251.0" text="Downloaded successfully!" textFill="#088630" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="uploadNotice" layoutX="318.0" layoutY="313.0" text="Uploaded successfully!" textFill="#088630" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="solutionsLabel" layoutX="459.0" layoutY="242.0" text="Solutions:" />
+      <VBox fx:id="solutionsVbox" layoutX="435.0" layoutY="260.0" prefHeight="300.0" prefWidth="500.0" />
+      <TextField fx:id="markField" layoutX="671.0" layoutY="615.0" promptText="mark" />
+      <Button fx:id="downloadButton" layoutX="669.0" layoutY="572.0" mnemonicParsing="false" onAction="#downloadMedia" text="Download Solution Media" />
+      <Button fx:id="registerButton" layoutX="716.0" layoutY="651.0" mnemonicParsing="false" onAction="#registerMark" text="Register" />
+      <Label layoutX="76.0" layoutY="384.0" text="Mark:" />
+      <Label fx:id="markLabel" layoutX="215.0" layoutY="384.0" text="Label" />
+      <Label fx:id="registerNotice" layoutX="792.0" layoutY="655.0" text="Registered!" textFill="#0e7e42" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
    </children>

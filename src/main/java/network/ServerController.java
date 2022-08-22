@@ -306,4 +306,18 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response getAllSolutionsToHomework(int id) throws IOException {
+        Request request = new Request(RequestType.GET_SOLUTIONS);
+        request.addData("homeworkId", id);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public void registerMarkForSolution(int id, double mark) {
+        Request request = new Request(RequestType.REGISTER_MARK);
+        request.addData("solutionId", id);
+        request.addData("mark", mark);
+        sendRequest(request);
+    }
 }
