@@ -195,6 +195,7 @@ public class CwMainPageGUI implements Initializable {
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page;
         if (isMaster) {
             page = config.getProperty(String.class, "masterMainMenu");
@@ -205,6 +206,7 @@ public class CwMainPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }

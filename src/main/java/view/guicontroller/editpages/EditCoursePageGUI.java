@@ -40,6 +40,7 @@ public class EditCoursePageGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static ArrayList<String> studentIDs = new ArrayList<>();
     public static ArrayList<String> TAsIds = new ArrayList<>();
+    private Timeline timeline;
     @FXML
     Label editCourseLabel;
     @FXML
@@ -78,7 +79,7 @@ public class EditCoursePageGUI implements Initializable {
         client = ServerController.client;
         int counter = MasterMainMenuGUI.counter;
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -149,11 +150,13 @@ public class EditCoursePageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterMainMenu");
         OpenPage.openNewPage(actionEvent, page);
     }

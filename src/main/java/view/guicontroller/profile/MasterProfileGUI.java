@@ -37,6 +37,7 @@ public class MasterProfileGUI implements Initializable {
     public static Client client = ServerController.client;
     public static SharedMaster master = MasterData.master;
     public static Config config = Config.getConfig();
+    private Timeline timeline;
     @FXML
     Label fullNameLabel;
     @FXML
@@ -72,7 +73,7 @@ public class MasterProfileGUI implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         int counter = MasterMainMenuGUI.counter;
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -106,11 +107,13 @@ public class MasterProfileGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterMainMenu");
         OpenPage.openNewPage(actionEvent, page);
     }

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
 public class EducationalStatusPageGUI implements Initializable {
     public static Client client = ServerController.client;
     public static Config config = Config.getConfig();
-
+    private Timeline timeline;
     public static TableView<PassedCourse> coursesTable;
     @FXML
     AnchorPane background;
@@ -56,7 +56,7 @@ public class EducationalStatusPageGUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -144,11 +144,13 @@ public class EducationalStatusPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page;
         if (Client.clientType.equals(config.getProperty(String.class, "studentType"))) {
             page = config.getProperty(String.class, "studentMainMenu");

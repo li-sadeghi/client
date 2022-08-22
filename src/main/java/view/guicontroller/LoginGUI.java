@@ -155,6 +155,7 @@ public class LoginGUI implements Initializable {
             Client.clientType = config.getProperty(String.class, "mohseniType");
             page = config.getProperty(String.class, "mohseniPage");
         }
+        timeline.stop();
         OpenPage.openNewPage(actionEvent, page);
     }
 
@@ -168,6 +169,7 @@ public class LoginGUI implements Initializable {
     }
 
     public void openChangePassPage(SharedUser user, ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         page = config.getProperty(String.class, "changePasswordPage");
         OpenPage.openNewPage(actionEvent, page);
     }

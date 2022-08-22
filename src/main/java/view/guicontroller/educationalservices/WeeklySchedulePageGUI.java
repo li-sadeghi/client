@@ -39,6 +39,7 @@ public class WeeklySchedulePageGUI implements Initializable {
     public static Client client;
     public static Config config = Config.getConfig();
     public static TableView<Course> coursesTable;
+    private Timeline timeline;
     @FXML
     AnchorPane background;
     @FXML
@@ -51,7 +52,7 @@ public class WeeklySchedulePageGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         client = ServerController.client;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -93,11 +94,13 @@ public class WeeklySchedulePageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String type = Client.clientType;
         String page;
         if (type.equals(config.getProperty(String.class, "studentType"))) {

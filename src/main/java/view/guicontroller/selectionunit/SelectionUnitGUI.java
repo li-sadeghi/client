@@ -37,7 +37,7 @@ public class SelectionUnitGUI implements Initializable {
     public static TableView<Course> allCoursesTable;
     public static TableView<Course> suggestedCoursesTable;
     public static List<Course> coursesSelected = new ArrayList<>();
-
+    private Timeline timeline;
 
     @FXML
     Label noticeLabel;
@@ -62,7 +62,7 @@ public class SelectionUnitGUI implements Initializable {
 
         int counter = StudentMainMenuGUI.counter;
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -203,11 +203,13 @@ public class SelectionUnitGUI implements Initializable {
 
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "studentMainMenu");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }

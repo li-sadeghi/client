@@ -39,6 +39,7 @@ public class StudentMainMenuGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static String requestType;
     public static int counter = 0;
+    private Timeline timeline;
     @FXML
     Label currentTimeLabel;
     @FXML
@@ -82,7 +83,7 @@ public class StudentMainMenuGUI implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         student = StudentData.student;
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -164,6 +165,7 @@ public class StudentMainMenuGUI implements Initializable {
     }
 
     public void openRequestPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "requestPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
@@ -182,70 +184,83 @@ public class StudentMainMenuGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void profilePage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "studentProfile");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void listOfCoursesPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "listOfCoursesPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void listOfMastersPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "listOfMastersPage");
         System.out.println(page);
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void weeklySchedulePage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "weeklySchedulePage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void examListPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "examListPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void recommendationPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         StudentMainMenuGUI.requestType = config.getProperty(String.class, "recommendationRequest");
         openRequestPage(mouseEvent);
     }
 
     public void CertificateStudentPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         StudentMainMenuGUI.requestType = config.getProperty(String.class, "certificateRequest");
         ;
         openRequestPage(mouseEvent);
     }
 
     public void minorPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         StudentMainMenuGUI.requestType = config.getProperty(String.class, "minorRequest");
         ;
         openRequestPage(mouseEvent);
     }
 
     public void withdrawPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         StudentMainMenuGUI.requestType = config.getProperty(String.class, "withdrawRequest");
         ;
         openRequestPage(mouseEvent);
     }
 
     public void temporaryScoresPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "temporaryScoresPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void educationalStatusPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "educationalStatusPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void openEduGram(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "eduGramPage");
         OpenPage.openNewPage(actionEvent, page);
     }
@@ -268,15 +283,18 @@ public class StudentMainMenuGUI implements Initializable {
     }
 
     public void selectionUnitPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "selectionUnitPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void coursewarePage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "cwMainPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void requestsPage(ActionEvent actionEvent) {
+        //TODO
     }
 }

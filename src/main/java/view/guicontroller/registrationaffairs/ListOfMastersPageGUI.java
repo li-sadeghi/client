@@ -42,6 +42,8 @@ public class ListOfMastersPageGUI implements Initializable {
 
     public static TableView<SharedMaster> mastersTable;
     public static List<SharedMaster> mastersSelected;
+    private Timeline timeline;
+
     @FXML
     Label errorLabel;
     @FXML
@@ -74,7 +76,7 @@ public class ListOfMastersPageGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         client = ServerController.client;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -157,11 +159,13 @@ public class ListOfMastersPageGUI implements Initializable {
 
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String type = Client.clientType;
         if (type.equals(config.getProperty(String.class, "studentType"))) {
             String page = config.getProperty(String.class, "studentMainMenu");
@@ -182,11 +186,13 @@ public class ListOfMastersPageGUI implements Initializable {
     }
 
     public void addMasterPage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "addNewUserPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void editMasterPage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "editMasterPage");
         OpenPage.openNewPage(actionEvent, page);
     }

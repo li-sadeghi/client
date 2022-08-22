@@ -174,6 +174,7 @@ public class MohseniPageController implements Initializable {
     }
 
     public void openProfilePage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         SharedStudent student= studentsSelected.get(0);
         StudentProfileGUI.isMohseni = true;
         StudentProfileGUI.studentUsername = student.getUsername();

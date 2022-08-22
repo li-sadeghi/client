@@ -39,6 +39,8 @@ public class AddNewUserPageGUI implements Initializable {
     public static SharedMaster master;
     public static Config config = Config.getConfig();
     public static byte[] byteArrayImage;
+    private Timeline timeline;
+
     @FXML
     TextField masterName;
     @FXML
@@ -96,7 +98,7 @@ public class AddNewUserPageGUI implements Initializable {
 //        int counter = MasterMainMenuGUI.counter;
         if (master.getMasterRole() == MasterRole.CHAIRMAN) setPageForChairman();
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -227,11 +229,13 @@ public class AddNewUserPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterMainMenu");
         OpenPage.openNewPage(actionEvent, page);
     }

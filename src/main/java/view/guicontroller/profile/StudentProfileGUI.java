@@ -41,6 +41,7 @@ public class StudentProfileGUI implements Initializable {
     public static String studentUsername;
     public static Config config = Config.getConfig();
     public static int counter = 0;
+    private Timeline timeline;
 
     @FXML
     Label fullNameLabel;
@@ -108,7 +109,7 @@ public class StudentProfileGUI implements Initializable {
             studentUsername = StudentMainMenuGUI.student.getUsername();
         }
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -160,11 +161,13 @@ public class StudentProfileGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "studentMainMenu");
         if (isMohseni){
             page = config.getProperty(String.class, "mohseniPage");

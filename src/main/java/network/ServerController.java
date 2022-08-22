@@ -8,6 +8,8 @@ import request.RequestType;
 import response.Response;
 import sharedmodels.chatroom.Message;
 import sharedmodels.chatroom.MessageType;
+import sharedmodels.cw.HomeWork;
+import sharedmodels.cw.Solution;
 import sharedmodels.department.Course;
 import sharedmodels.users.SharedMaster;
 import sharedmodels.users.SharedStudent;
@@ -318,6 +320,29 @@ public class ServerController {
         Request request = new Request(RequestType.REGISTER_MARK);
         request.addData("solutionId", id);
         request.addData("mark", mark);
+        sendRequest(request);
+    }
+
+    public Response checkHaveSolutionToHomeWork(int id, String clientUsername) throws IOException {
+        Request request = new Request(RequestType.HAVE_SOLUTION);
+        request.addData("homeworkId", id);
+        request.addData("username", clientUsername);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public Response getSolutionForHomeWork(int id, String clientUsername) throws IOException {
+        Request request = new Request(RequestType.GET_SOLUTION);
+        request.addData("homeworkId", id);
+        request.addData("username", clientUsername);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public void sendNewSolution(HomeWork homeWork, Solution solution) throws IOException {
+        Request request = new Request(RequestType.NEW_SOLUTION);
+        request.addData("solution", solution);
+        request.addData("homework", homeWork);
         sendRequest(request);
     }
 }

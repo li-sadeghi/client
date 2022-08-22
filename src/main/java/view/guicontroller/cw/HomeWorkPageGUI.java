@@ -2,6 +2,9 @@ package view.guicontroller.cw;
 
 import config.Config;
 import extra.Deadline;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +14,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
 import response.Response;
@@ -20,11 +26,13 @@ import sharedmodels.department.Course;
 import time.DateAndTime;
 import util.extra.EncodeDecodeFile;
 import view.OpenPage;
+import view.guicontroller.CheckConnection;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,7 +47,7 @@ public class HomeWorkPageGUI implements Initializable {
     public static TableView<Solution> solutionsTable;
 
     public static List<Solution> solutionsSelected = new ArrayList<>();
-
+    private Timeline timeline;
 
 
     @FXML
@@ -66,26 +74,65 @@ public class HomeWorkPageGUI implements Initializable {
     Label registerNotice;
     @FXML
     Label markLabel;
+    @FXML
+    Label nameLabel;
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                CheckConnection.checkConnection(refreshButton, connectionLabel);
+                if (isMaster){
+                    markField.setVisible(true);
+                    solutionsLabel.setVisible(true);
+                    registerButton.setVisible(true);
+                    downloadButton.setVisible(true);
+                    try {
+                        setPageVip();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                try {
+                    setPage();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
+
+
+
+    }
+
+    public void setPage() throws IOException {
+        nameLabel.setText(homeWork.getHomeWorkName());
         if (isMaster){
-            markField.setVisible(true);
-            solutionsLabel.setVisible(true);
-            registerButton.setVisible(true);
-            downloadButton.setVisible(true);
-            try {
-                setPageVip();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            markLabel.setText("none");
+        }else {
+            if (studentHaveSolution(homeWork)){
+                Solution solution = getSolution(homeWork);
+                markLabel.setText(String.valueOf(solution.getMark()));
+            }else {
+                markLabel.setText("none");
             }
         }
-        //TODO
+    }
 
+    private Solution getSolution(HomeWork homeWork) throws IOException {
+        Response response = client.getServerController().getSolutionForHomeWork(homeWork.getId(), Client.clientUsername);
+        Solution solution = (Solution) response.getData("solution");
+        return solution;
+    }
 
-
+    private boolean studentHaveSolution(HomeWork homeWork) throws IOException {
+        Response response = client.getServerController().checkHaveSolutionToHomeWork(homeWork.getId(), Client.clientUsername);
+        return (boolean) response.getData("result");
     }
 
     private void setPageVip() throws IOException {
@@ -136,11 +183,13 @@ public class HomeWorkPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "cwMainPage");
         OpenPage.openNewPage(actionEvent, page);
     }
@@ -148,6 +197,7 @@ public class HomeWorkPageGUI implements Initializable {
     public void downloadMedia(ActionEvent actionEvent) throws IOException {
         Solution solution = solutionsSelected.get(0);
         downloadFileAndSave(solution.getAnswerFileString(), solution.getAnswerFileType());
+        downloadNotice.setVisible(true);
     }
 
     private void downloadFileAndSave(String encoded, String fileType) throws IOException {
@@ -166,5 +216,38 @@ public class HomeWorkPageGUI implements Initializable {
         double mark = Double.parseDouble(markField.getText());
         client.getServerController().registerMarkForSolution(solution.getId(), mark);
         registerNotice.setVisible(true);
+    }
+
+    public void uploadSolution(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+                new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3"),
+                new FileChooser.ExtensionFilter("IMAGES", "*.jpg"),
+                new FileChooser.ExtensionFilter("VIDEOS", "*.mp4"));
+
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        byte[] byteArray = null;
+        if (selectedFile != null) {
+//            if(selectedFile.length()>2000000){ //2 MB
+//                throw new SizeLimitExceededException();
+//            }
+            try {
+                byteArray = Files.readAllBytes(selectedFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String text = EncodeDecodeFile.byteArrayToString(byteArray);
+        String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
+
+        Solution solution = new Solution();
+        solution.setTime(DateAndTime.getDateAndTime());
+        solution.setAnswerFileType(fileType);
+        solution.setResponsiveId(Client.clientUsername);
+        solution.setAnswerFileString(text);
+        client.getServerController().sendNewSolution(homeWork, solution);
+        uploadNotice.setVisible(true);
     }
 }

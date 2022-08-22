@@ -40,6 +40,8 @@ public class ListOfCoursesPageGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static TableView<Course> coursesTable;
     public static List<Course> coursesSelected = new ArrayList<>();
+    private Timeline timeline;
+
     @FXML
     Label enterLabel;
     @FXML
@@ -71,7 +73,7 @@ public class ListOfCoursesPageGUI implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         client = ServerController.client;
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -157,11 +159,13 @@ public class ListOfCoursesPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String type = Client.clientType;
         if (type.equals(config.getProperty(String.class, "studentType"))) {
             String page = config.getProperty(String.class, "studentMainMenu");
@@ -181,11 +185,13 @@ public class ListOfCoursesPageGUI implements Initializable {
     }
 
     public void addCoursePage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "editCoursePage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void editCoursePage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "editCoursePage");
         OpenPage.openNewPage(actionEvent, page);
     }

@@ -43,6 +43,7 @@ public class EduGramController implements Initializable {
 
     public static TableView<SharedStudent> usersTable;
     public static List<SharedStudent> studentsSelected = new ArrayList<>();
+    private Timeline timeline;
 
     @FXML
     Button refreshButton;
@@ -68,7 +69,7 @@ public class EduGramController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -118,6 +119,7 @@ public class EduGramController implements Initializable {
         chatsTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                timeline.stop();
                 chatsSelected = chatsTable.getSelectionModel().getSelectedItems();
                 ChatPvController.thisChat = chatsSelected.get(0);
                 String receiverId = chatsSelected.get(0).getReceiverId();
@@ -190,11 +192,13 @@ public class EduGramController implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "studentMainMenu");
         if (Client.clientType.equals("masterType")){
             page = config.getProperty(String.class, "masterMainMenu");

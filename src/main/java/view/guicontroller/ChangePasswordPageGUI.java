@@ -29,6 +29,7 @@ public class ChangePasswordPageGUI implements Initializable {
     public static Client client = ServerController.client;
     public static Thread thread;
     public static Config config = Config.getConfig();
+    private Timeline timeline;
     @FXML
     Label loginNotice;
     @FXML
@@ -45,7 +46,7 @@ public class ChangePasswordPageGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Theme.setTheme(2, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -70,6 +71,7 @@ public class ChangePasswordPageGUI implements Initializable {
     }
 
     public void backLoginPage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }

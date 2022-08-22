@@ -29,7 +29,7 @@
       <Button layoutX="214.0" layoutY="247.0" mnemonicParsing="false" text="Download" />
       <Label fx:id="nameLabel" layoutX="215.0" layoutY="205.0" text="Loading..." />
       <Label layoutX="77.0" layoutY="313.0" text="Upload Your Answer:" />
-      <Button layoutX="213.0" layoutY="309.0" mnemonicParsing="false" text="Upload" />
+      <Button layoutX="213.0" layoutY="309.0" mnemonicParsing="false" onAction="#uploadSolution" text="Upload" />
       <Label fx:id="downloadNotice" layoutX="318.0" layoutY="251.0" text="Downloaded successfully!" textFill="#088630" visible="false">
          <font>
             <Font name="System Bold" size="12.0" />

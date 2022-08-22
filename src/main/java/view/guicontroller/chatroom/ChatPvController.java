@@ -47,6 +47,7 @@ public class ChatPvController implements Initializable {
     public static String receiverUsername;
     public static Chat thisChat;
     public static int indexOfChat;
+    private Timeline timeline;
     @FXML
     Button downloadMediaButton;
     @FXML
@@ -67,7 +68,7 @@ public class ChatPvController implements Initializable {
         receiverUsername = thisChat.getReceiverId();
         senderUsername = thisChat.getSenderId();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -184,11 +185,13 @@ public class ChatPvController implements Initializable {
     }
 
     public void backEduGram(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "eduGramPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }

@@ -43,6 +43,8 @@ public class EditMasterPageGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static ArrayList<String> coursesIDs = new ArrayList<>();
     public static byte[] byteArrayImage;
+    private Timeline timeline;
+
     @FXML
     ImageView myImageBackground;
     @FXML
@@ -83,7 +85,7 @@ public class EditMasterPageGUI implements Initializable {
         int counter = 0;
 //        counter = MasterMainMenuGUI.counter;
         Theme.setTheme(counter, background);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
@@ -168,11 +170,13 @@ public class EditMasterPageGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterMainMenu");
         OpenPage.openNewPage(actionEvent, page);
     }

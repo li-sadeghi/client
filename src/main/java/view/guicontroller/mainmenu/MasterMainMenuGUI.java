@@ -38,6 +38,7 @@ public class MasterMainMenuGUI implements Initializable {
     public static SharedMaster master = MasterData.master;
     public static int counter = 0;
     public static Config config = Config.getConfig();
+    private Timeline timeline;
     @FXML
     Label currentTimeLabel;
     @FXML
@@ -67,7 +68,7 @@ public class MasterMainMenuGUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 master = MasterData.master;
@@ -98,6 +99,7 @@ public class MasterMainMenuGUI implements Initializable {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
     }
@@ -108,52 +110,62 @@ public class MasterMainMenuGUI implements Initializable {
     }
 
     public void profilePage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterProfile");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void listOfCoursesPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "listOfCoursesPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void listOfMastersPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "listOfMastersPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void openAddNewUserPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "addNewUserPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void weeklySchedulePage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "weeklySchedulePage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void examListPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "examListPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
 
     public void masterRequestPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterRequestPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void educationalStatusPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "educationalStatusPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void temporaryScoresPage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "masterTemporaryScores");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void openEduGram(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "eduGramPage");
         OpenPage.openNewPage(actionEvent, page);
     }
@@ -176,11 +188,13 @@ public class MasterMainMenuGUI implements Initializable {
     }
 
     public void setSelectionTimePage(MouseEvent mouseEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "setSelectionTimePage");
         OpenPage.openNewPage(mouseEvent, page);
     }
 
     public void coursewarePage(ActionEvent actionEvent) throws IOException {
+        timeline.stop();
         String page = config.getProperty(String.class, "cwMainPage");
         OpenPage.openNewPage(actionEvent, page);
     }
