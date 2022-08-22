@@ -22,5 +22,6 @@
       <TextField fx:id="nameFilter" layoutX="382.0" layoutY="51.0" promptText="student name" visible="false" />
       <TextField fx:id="idFilter" layoutX="558.0" layoutY="51.0" promptText="student id" visible="false" />
       <Label fx:id="searchLabel" layoutX="293.0" layoutY="54.0" prefHeight="18.0" prefWidth="56.0" text="Search:" visible="false" />
+      <VBox fx:id="averageVbox" layoutX="97.0" layoutY="587.0" prefHeight="75.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

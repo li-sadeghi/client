@@ -1,6 +1,7 @@
 package view.guicontroller.recordaffairs;
 
 import config.Config;
+import extra.Average;
 import extra.StringMatcher;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -50,6 +51,8 @@ public class EducationalStatusPageGUI implements Initializable {
     TextField nameFilter;
     @FXML
     TextField idFilter;
+    @FXML
+    VBox averageVbox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,6 +79,28 @@ public class EducationalStatusPageGUI implements Initializable {
     }
 
     private void setPage()  {
+        averageVbox.getChildren().clear();
+        int allUnits = StudentData.student.allUnitPassed(StudentData.passedCourses);
+        double average = StudentData.student.getAverage();
+        Average averageClass = new Average();
+        averageClass.setAverage(average);
+        averageClass.setAllUnits(allUnits);
+        TableView<Average> averageTable = new TableView<>();
+
+        TableColumn<Average, Double> averageColumn = new TableColumn<>("Average");
+        averageColumn.setPrefWidth(75);
+        averageColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
+
+        TableColumn<Average, Integer>allUnitsColumn = new TableColumn<>("All Units");
+        allUnitsColumn.setPrefWidth(75);
+        allUnitsColumn.setCellValueFactory(new PropertyValueFactory<>("allUnits"));
+        averageTable.setPrefWidth(150);
+        averageTable.setPrefHeight(75);
+        averageTable.getColumns().addAll(averageColumn, allUnitsColumn);
+        averageTable.getItems().add(averageClass);
+        averageVbox.getChildren().add(averageTable);
+
+
         ArrayList<PassedCourse> passedCourses;
         if (Client.clientType.equals(config.getProperty(String.class, "studentType"))){
             passedCourses = StudentData.passedCourses;
@@ -125,7 +150,7 @@ public class EducationalStatusPageGUI implements Initializable {
 
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
         String page;
-        if (LoginGUI.type.equals(config.getProperty(String.class, "studentType"))) {
+        if (Client.clientType.equals(config.getProperty(String.class, "studentType"))) {
             page = config.getProperty(String.class, "studentMainMenu");
         } else page = config.getProperty(String.class, "masterMainMenu");
 
@@ -135,4 +160,8 @@ public class EducationalStatusPageGUI implements Initializable {
     public void refresh(ActionEvent actionEvent) throws IOException {
         ServerController.reconnect();
     }
+
 }
+
+
+

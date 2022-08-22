@@ -25,7 +25,6 @@ import sharedmodels.users.MasterRole;
 import sharedmodels.users.SharedMaster;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
-import view.guicontroller.LoginGUI;
 import view.guicontroller.Theme;
 import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
@@ -108,7 +107,7 @@ public class ListOfCoursesPageGUI implements Initializable {
         if (Client.clientType.equals(config.getProperty(String.class, "masterType"))){
             courses = MasterData.courses;
         }else {
-            courses = StudentData.courses;
+            courses = StudentData.allCourses;
         }
         coursesListVbox.getChildren().clear();
         coursesTable = new TableView<>();

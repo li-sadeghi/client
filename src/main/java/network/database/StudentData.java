@@ -20,10 +20,10 @@ public class StudentData {
     public static SharedStudent student;
     public static SharedMaster helperMaster;
     public static Department department;
-    public static ArrayList<Course> courses = new ArrayList<>();
-    public static ArrayList<SharedMaster> masters = new ArrayList<>();
-    public static ArrayList<Chat> chats = new ArrayList<>();
-    public static ArrayList<SharedStudent> students = new ArrayList<>();
+    public static ArrayList<Course> allCourses ;
+    public static ArrayList<SharedMaster> masters ;
+    public static ArrayList<Chat> chats ;
+    public static ArrayList<SharedStudent> students ;
     public static ArrayList<TemporaryCourse> temporaryCourses;
     public static ArrayList<PassedCourse> passedCourses;
     public static ArrayList<Course> coursesHave;
@@ -33,7 +33,7 @@ public class StudentData {
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllStudentData(Client.clientUsername);
         student = (SharedStudent) response.getData("user");
-        courses = (ArrayList<Course>) response.getData("courses");
+        allCourses = (ArrayList<Course>) response.getData("courses");
         masters = (ArrayList<SharedMaster>) response.getData("masters");
 
         chats = (ArrayList<Chat>) response.getData("chats");
@@ -41,12 +41,12 @@ public class StudentData {
         helperMaster = (SharedMaster) response.getData("helperMaster");
         //TODO
 
-        //department = ...
-        //temporary = ...
-        //passedCourses =...
-        //coursesHave = ...
-        //starredCourses = ...
-        //suggestedCourses = ...
+        department = (Department) response.getData("department");
+        temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
+        passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
+        coursesHave = (ArrayList<Course>) response.getData("coursesHave");
+        starredCourses = (ArrayList<Course>) response.getData("starredCourses");
+        suggestedCourses = (ArrayList<Course>) response.getData("suggestedCourses");
         MessageToAdmin.loadAndSendMessages();
     }
 }

@@ -17,16 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
-import network.database.MasterData;
 import network.database.StudentData;
 import response.Response;
 import sharedmodels.department.Course;
-import sharedmodels.users.MasterRole;
-import sharedmodels.users.SharedMaster;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
-import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
 import java.io.IOException;
@@ -79,7 +75,7 @@ public class SelectionUnitGUI implements Initializable {
 
     public void setPage(){
         ArrayList<Course> starredCourses = StudentData.starredCourses;
-        ArrayList<Course> allCourses = StudentData.courses;
+        ArrayList<Course> allCourses = StudentData.allCourses;
         coursesVbox.getChildren().clear();
         suggestionVbox.getChildren().clear();
 
