@@ -60,8 +60,15 @@ public class ServerController {
     public Response getResponse() throws IOException {
         Response response = null;
         try {
-            String input = scanner.nextLine();
-            response = objectMapper.readValue(input, Response.class);
+            String input;
+            try {
+                input = scanner.nextLine();
+            }catch (Exception e){
+                input = null;
+            }
+            if (input!= null){
+                response = objectMapper.readValue(input, Response.class);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }catch (NoSuchElementException n){

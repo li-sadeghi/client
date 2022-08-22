@@ -5,6 +5,7 @@ import network.ServerController;
 import network.offline.MessageToAdmin;
 import response.Response;
 import sharedmodels.chatroom.Chat;
+import sharedmodels.cw.HomeWork;
 import sharedmodels.department.Course;
 import sharedmodels.department.Department;
 import sharedmodels.department.PassedCourse;
@@ -32,20 +33,22 @@ public class StudentData {
 
     public static void updateData() throws IOException {
         Response response = client.getServerController().getAllStudentData(Client.clientUsername);
-        student = (SharedStudent) response.getData("user");
-        allCourses = (ArrayList<Course>) response.getData("courses");
-        masters = (ArrayList<SharedMaster>) response.getData("masters");
+        if (response != null){
+            student = (SharedStudent) response.getData("user");
+            allCourses = (ArrayList<Course>) response.getData("courses");
+            masters = (ArrayList<SharedMaster>) response.getData("masters");
 
-        chats = (ArrayList<Chat>) response.getData("chats");
-        students = (ArrayList<SharedStudent>) response.getData("students");
-        helperMaster = (SharedMaster) response.getData("helperMaster");
+            chats = (ArrayList<Chat>) response.getData("chats");
+            students = (ArrayList<SharedStudent>) response.getData("students");
+            helperMaster = (SharedMaster) response.getData("helperMaster");
 
-        department = (Department) response.getData("department");
-        temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
-        passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
-        coursesHave = (ArrayList<Course>) response.getData("coursesHave");
-        starredCourses = (ArrayList<Course>) response.getData("starredCourses");
-        suggestedCourses = (ArrayList<Course>) response.getData("suggestedCourses");
+            department = (Department) response.getData("department");
+            temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
+            passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
+            coursesHave = (ArrayList<Course>) response.getData("coursesHave");
+            starredCourses = (ArrayList<Course>) response.getData("starredCourses");
+            suggestedCourses = (ArrayList<Course>) response.getData("suggestedCourses");
+        }
         MessageToAdmin.loadAndSendMessages();
     }
 }

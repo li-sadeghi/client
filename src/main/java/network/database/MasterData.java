@@ -5,6 +5,7 @@ import network.ServerController;
 import network.offline.MessageToAdmin;
 import response.Response;
 import sharedmodels.chatroom.Chat;
+import sharedmodels.cw.HomeWork;
 import sharedmodels.department.Course;
 import sharedmodels.department.Department;
 import sharedmodels.department.PassedCourse;
@@ -34,15 +35,17 @@ public class MasterData {
     public static void updateData() throws IOException {
         MessageToAdmin.loadAndSendMessages();
         Response response = client.getServerController().getAllMasterData(Client.clientUsername);
-        master = (SharedMaster) response.getData("user");
-        courses = (ArrayList<Course>) response.getData("courses");
-        masters = (ArrayList<SharedMaster>) response.getData("masters");
-        passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
-        students = (ArrayList<SharedStudent>) response.getData("students");
-        chats = (ArrayList<Chat>) response.getData("chats");
-        allStudents = (ArrayList<SharedStudent>) response.getData("allStudents");
-        department = (Department) response.getData("department");
-        temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
-        coursesHave = (ArrayList<Course>) response.getData("coursesHave");
+        if (response != null){
+            master = (SharedMaster) response.getData("user");
+            courses = (ArrayList<Course>) response.getData("courses");
+            masters = (ArrayList<SharedMaster>) response.getData("masters");
+            passedCourses = (ArrayList<PassedCourse>) response.getData("passedCourses");
+            students = (ArrayList<SharedStudent>) response.getData("students");
+            chats = (ArrayList<Chat>) response.getData("chats");
+            allStudents = (ArrayList<SharedStudent>) response.getData("allStudents");
+            department = (Department) response.getData("department");
+            temporaryCourses = (ArrayList<TemporaryCourse>) response.getData("temporaryCourses");
+            coursesHave = (ArrayList<Course>) response.getData("coursesHave");
+        }
     }
 }

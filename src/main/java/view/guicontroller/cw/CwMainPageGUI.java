@@ -46,6 +46,7 @@ public class CwMainPageGUI implements Initializable {
     public static Client client = ServerController.client;
     public static Config config = Config.getConfig();
     public static boolean isMaster;
+    private Timeline timeline;
 
     public static TableView<Course> coursesTable;
     public static List<Course> coursesSelected = new ArrayList<>();
@@ -75,12 +76,13 @@ public class CwMainPageGUI implements Initializable {
         }
         Theme.setTheme(counter, background);
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(6), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 ArrayList<Course> courses;
                 ArrayList<HomeWork> homeWorks;
+                CheckConnection.checkConnection(refreshButton, connectionLabel);
                 if (Client.clientType.equals(config.getProperty(String.class, "studentType"))) {
                     courses = StudentData.coursesHave;
                     try {
@@ -97,6 +99,7 @@ public class CwMainPageGUI implements Initializable {
                     }
                 }
                 setPage(courses, homeWorks);
+
             }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -104,15 +107,17 @@ public class CwMainPageGUI implements Initializable {
     }
 
     private ArrayList<HomeWork> getAllHomeworks(ArrayList<Course> courses) throws IOException {
-        ArrayList<HomeWork> homeWorks = new ArrayList<>();
+        ArrayList<HomeWork>homeWorks = new ArrayList<>();
         for (Course course : courses) {
             for (Integer id : course.getHomeWorksId()) {
                 Response response = client.getServerController().getHomework(id);
-                homeWorks.add((HomeWork) response.getData("homework"));
+                HomeWork homeWork= (HomeWork) response.getData("homework");
+                homeWorks.add(homeWork);
             }
         }
         return homeWorks;
     }
+
 
     public void setPage(ArrayList<Course> courses, ArrayList<HomeWork> homeWorks){
         ArrayList<Deadline> deadlines = getDeadlines(courses, homeWorks);
@@ -137,7 +142,15 @@ public class CwMainPageGUI implements Initializable {
         coursesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                timeline.stop();
                 coursesSelected = coursesTable.getSelectionModel().getSelectedItems();
+                CwCoursePageGUI.course = coursesSelected.get(0);
+                String page = config.getProperty(String.class, "cwCoursePage");
+                try {
+                    OpenPage.openNewPage(event, page);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
