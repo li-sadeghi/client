@@ -107,5 +107,7 @@
          </font>
       </Label>
       <Label fx:id="selectUnitLabel" layoutX="825.0" layoutY="237.0" onMouseClicked="#selectionUnitPage" text="Seletion Unit" visible="false" />
+      <Button layoutX="674.0" layoutY="534.0" mnemonicParsing="false" onAction="#coursewarePage" text="Courseware" />
+      <Button layoutX="672.0" layoutY="497.0" mnemonicParsing="false" onAction="#requestsPage" text="Requests" />
    </children>
 </AnchorPane>

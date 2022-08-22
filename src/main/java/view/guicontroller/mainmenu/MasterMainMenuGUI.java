@@ -179,4 +179,9 @@ public class MasterMainMenuGUI implements Initializable {
         String page = config.getProperty(String.class, "setSelectionTimePage");
         OpenPage.openNewPage(mouseEvent, page);
     }
+
+    public void coursewarePage(ActionEvent actionEvent) throws IOException {
+        String page = config.getProperty(String.class, "cwMainPage");
+        OpenPage.openNewPage(actionEvent, page);
+    }
 }

@@ -292,4 +292,11 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public Response getHomework(Integer id) throws IOException {
+        Request request = new Request(RequestType.GET_HOMEWORK);
+        request.addData("id", id);
+        sendRequest(request);
+        return getResponse();
+    }
 }

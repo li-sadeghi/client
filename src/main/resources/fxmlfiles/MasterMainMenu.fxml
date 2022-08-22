@@ -92,5 +92,6 @@
          </font>
       </Label>
       <Label fx:id="setTimeLabel" layoutX="814.0" layoutY="259.0" onMouseClicked="#setSelectionTimePage" text="Set Selection Time" visible="false" />
+      <Button layoutX="614.0" layoutY="489.0" mnemonicParsing="false" onAction="#coursewarePage" text="Courseware" />
    </children>
 </AnchorPane>

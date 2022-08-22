@@ -271,4 +271,12 @@ public class StudentMainMenuGUI implements Initializable {
         String page = config.getProperty(String.class, "selectionUnitPage");
         OpenPage.openNewPage(mouseEvent, page);
     }
+
+    public void coursewarePage(ActionEvent actionEvent) throws IOException {
+        String page = config.getProperty(String.class, "cwMainPage");
+        OpenPage.openNewPage(actionEvent, page);
+    }
+
+    public void requestsPage(ActionEvent actionEvent) {
+    }
 }
