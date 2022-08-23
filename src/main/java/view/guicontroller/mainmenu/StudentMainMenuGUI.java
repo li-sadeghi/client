@@ -176,7 +176,11 @@ public class StudentMainMenuGUI implements Initializable {
         SetPage.setPage(userImageVBox, nameLabel, emailAddressLabel, lastLoginTimeLabel, userImageVBox, student);
         statusLabel.setText(student.getStatus().toString());
         helperMasterLabel.setText(StudentData.helperMaster.getFullName());
-        regTimeLabel.setText("from " + student.getRegistrationTimeStart() + " to " + student.getRegistrationTimeEnd());
+        if (student.getRegistrationTimeEnd() == null){
+            regTimeLabel.setText("Not yet determined.");
+        }else {
+            regTimeLabel.setText("from " + student.getRegistrationTimeStart() + " to " + student.getRegistrationTimeEnd());
+        }
         licenseLabel.setText(student.getRegistrationLicence().toString());
     }
 
