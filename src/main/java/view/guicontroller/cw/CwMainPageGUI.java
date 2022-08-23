@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -64,6 +61,14 @@ public class CwMainPageGUI implements Initializable {
     Button refreshButton;
     @FXML
     Label connectionLabel;
+    @FXML
+    TextField courseIdField;
+    @FXML
+    TextField studentIdField;
+    @FXML
+    Button addButton;
+    @FXML
+    Label noticeLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -72,6 +77,9 @@ public class CwMainPageGUI implements Initializable {
             counter = StudentMainMenuGUI.counter;
             isMaster = false;
         } else {
+            courseIdField.setVisible(true);
+            studentIdField.setVisible(true);
+            addButton.setVisible(true);
             isMaster = true;
             counter = MasterMainMenuGUI.counter;
         }
@@ -226,5 +234,12 @@ public class CwMainPageGUI implements Initializable {
         timeline.stop();
         String page = config.getProperty(String.class, "loginPage");
         OpenPage.openNewPage(actionEvent, page);
+    }
+
+    public void addToCourse(ActionEvent actionEvent) {
+        String studentId = studentIdField.getText();
+        String courseId = courseIdField.getText();
+        client.getServerController().addNewUserToCourse(studentId, courseId);
+        noticeLabel.setVisible(true);
     }
 }

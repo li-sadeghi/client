@@ -78,6 +78,8 @@ public class StudentMainMenuGUI implements Initializable {
     Label errorLabel;
     @FXML
     Label selectUnitLabel;
+    @FXML
+    Label cwLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -290,8 +292,14 @@ public class StudentMainMenuGUI implements Initializable {
 
     public void coursewarePage(ActionEvent actionEvent) throws IOException {
         timeline.stop();
-        String page = config.getProperty(String.class, "cwMainPage");
-        OpenPage.openNewPage(actionEvent, page);
+        String endSelectionTime = config.getProperty(String.class, "endSelectionTime");
+        if (DateAndTime.isOver(endSelectionTime)){
+            String page = config.getProperty(String.class, "cwMainPage");
+            OpenPage.openNewPage(actionEvent, page);
+        }else {
+            cwLabel.setVisible(true);
+        }
+
     }
 
     public void requestsPage(ActionEvent actionEvent) {

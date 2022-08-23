@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.guicontroller.cw.CwMainPageGUI">
    <children>
@@ -27,5 +27,13 @@
       </Label>
       <Hyperlink layoutX="28.0" layoutY="32.0" onAction="#backMainMenu" text="Back To Main Menu" />
       <Hyperlink fx:id="exitHyperLink" layoutX="71.0" layoutY="74.0" onAction="#logout" text="Exit" />
+      <Button fx:id="addButton" layoutX="605.0" layoutY="617.0" mnemonicParsing="false" onAction="#addToCourse" text="Add Student To Course" visible="false" />
+      <TextField fx:id="courseIdField" layoutX="251.0" layoutY="617.0" promptText="course id" visible="false" />
+      <TextField fx:id="studentIdField" layoutX="425.0" layoutY="617.0" promptText="student id" visible="false" />
+      <Label fx:id="noticeLabel" layoutX="342.0" layoutY="661.0" text="Added successfully!" textFill="#07942c" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

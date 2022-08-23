@@ -345,4 +345,24 @@ public class ServerController {
         request.addData("homework", homeWork);
         sendRequest(request);
     }
+
+    public void addNewUserToCourse(String studentId, String courseId) {
+        Request request = new Request(RequestType.ADD_USER_TO_COURSE);
+        request.addData("studentId", studentId);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+    }
+
+    public Response getEducational(Integer id) throws IOException {
+        Request request = new Request(RequestType.GET_EDUCATIONAL);
+        request.addData("id", id);
+        sendRequest(request);
+        return getResponse();
+    }
+
+    public void deleteEducational(int id) {
+        Request request = new Request(RequestType.DELETE_EDUCATIONAL);
+        request.addData("id", id);
+        sendRequest(request);
+    }
 }

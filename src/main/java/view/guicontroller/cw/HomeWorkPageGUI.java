@@ -76,6 +76,10 @@ public class HomeWorkPageGUI implements Initializable {
     Label markLabel;
     @FXML
     Label nameLabel;
+    @FXML
+    Label startTimeLabel;
+    @FXML
+    Label endTimeLabel;
 
 
 
@@ -126,6 +130,8 @@ public class HomeWorkPageGUI implements Initializable {
                 markLabel.setText("none");
             }
         }
+        startTimeLabel.setText(homeWork.getStartTime());
+        endTimeLabel.setText(homeWork.getEndTime());
     }
 
     private Solution getSolution(HomeWork homeWork) throws IOException {

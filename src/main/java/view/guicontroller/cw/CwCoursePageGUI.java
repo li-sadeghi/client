@@ -9,11 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,22 +17,25 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
-import network.database.MasterData;
-import network.database.StudentData;
 import response.Response;
+import sharedmodels.cw.EducationalThing;
 import sharedmodels.cw.HomeWork;
 import sharedmodels.department.Course;
 import time.DateAndTime;
+import util.extra.EncodeDecodeFile;
 import view.OpenPage;
 import view.guicontroller.CheckConnection;
 import view.guicontroller.Theme;
 import view.guicontroller.mainmenu.MasterMainMenuGUI;
 import view.guicontroller.mainmenu.StudentMainMenuGUI;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class CwCoursePageGUI implements Initializable {
@@ -44,6 +43,9 @@ public class CwCoursePageGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static boolean isMaster;
     public static Course course;
+
+    public static TableView<EducationalThing> educationalTable;
+    public static List<EducationalThing> educationalSelected = new ArrayList<>();
 
     public static TableView<HomeWork> homeworksTable;
     public static List<HomeWork> homeworksSelected = new ArrayList<>();
@@ -66,6 +68,26 @@ public class CwCoursePageGUI implements Initializable {
     Label courseNameLabel;
     @FXML
     Label noticeLabel;
+    @FXML
+    VBox educationalVbox;
+    @FXML
+    TextField eduNameField;
+    @FXML
+    TextField hwNameField;
+    @FXML
+    TextField endTimeField;
+    @FXML
+    Button educationalAddButton;
+    @FXML
+    Button homeworkAddButton;
+    @FXML
+    Label label1;
+    @FXML
+    Label label2;
+    @FXML
+    Button deleteButton;
+    @FXML
+    Label deleteLabel;
 
 
     @Override
@@ -76,6 +98,14 @@ public class CwCoursePageGUI implements Initializable {
             counter = StudentMainMenuGUI.counter;
             isMaster = false;
         } else {
+            deleteButton.setVisible(true);
+            label1.setVisible(true);
+            eduNameField.setVisible(true);
+            hwNameField.setVisible(true);
+            endTimeField.setVisible(true);
+            educationalAddButton.setVisible(true);
+            homeworkAddButton.setVisible(true);
+            label2.setVisible(true);
             isMaster = true;
             counter = MasterMainMenuGUI.counter;
         }
@@ -85,12 +115,15 @@ public class CwCoursePageGUI implements Initializable {
             public void handle(ActionEvent event) {
                 CheckConnection.checkConnection(refreshButton, connectionLabel);
                 ArrayList<HomeWork> homeWorks = null;
+                ArrayList<EducationalThing> educationalThings = null;
                 try {
                     homeWorks = getAllHomeworks(course);
+                    Thread.sleep(2000);
+                    educationalThings = getAllEducations(course);
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                setPage( homeWorks);
+                setPage( homeWorks, educationalThings);
             }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -98,20 +131,30 @@ public class CwCoursePageGUI implements Initializable {
 
     }
 
+    private ArrayList<EducationalThing> getAllEducations(Course course) throws InterruptedException, IOException {
+        ArrayList<EducationalThing> educationalThings = new ArrayList<>();
+        for (Integer id : course.getEducationalThingsId()) {
+            Response response = client.getServerController().getEducational(id);
+            EducationalThing educationalThing= (EducationalThing) response.getData("educational");
+            educationalThings.add(educationalThing);
+            Thread.sleep(50);
+        }
+        return educationalThings;
+    }
+
     private ArrayList<HomeWork> getAllHomeworks(Course course) throws IOException, InterruptedException {
         ArrayList<HomeWork> homeWorks = new ArrayList<>();
-        System.out.println(course.getHomeWorksId().size());
         for (Integer id : course.getHomeWorksId()) {
             Response response = client.getServerController().getHomework(id);
             HomeWork homeWork= (HomeWork) response.getData("homework");
             homeWorks.add(homeWork);
-            Thread.sleep(50);
+            Thread.sleep(30);
         }
         return homeWorks;
     }
 
 
-    public void setPage(ArrayList<HomeWork> homeWorks){
+    public void setPage(ArrayList<HomeWork> homeWorks, ArrayList<EducationalThing> educationalThings){
         ArrayList<Deadline> deadlines = getDeadlines( homeWorks);
         calendarVbox.getChildren().clear();
         homeworksVbox.getChildren().clear();
@@ -176,6 +219,34 @@ public class CwCoursePageGUI implements Initializable {
             }
         });
 
+
+
+        educationalVbox.getChildren().clear();
+        educationalTable = new TableView<>();
+
+
+        TableColumn<EducationalThing, String> eduNameColumn = new TableColumn<>("name");
+        eduNameColumn.setPrefWidth(300);
+        eduNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        educationalTable.setPrefWidth(300);
+        educationalTable.setPrefHeight(100);
+
+        educationalTable.getColumns().addAll(eduNameColumn);
+
+        for (EducationalThing educationalThing : educationalThings) {
+            educationalTable.getItems().add(educationalThing);
+        }
+        educationalVbox.getChildren().add(educationalTable);
+
+        educationalTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                educationalSelected = educationalTable.getSelectionModel().getSelectedItems();
+
+            }
+        });
+
     }
 
     public ArrayList<Deadline> getDeadlines(ArrayList<HomeWork> homeWorks){
@@ -202,5 +273,39 @@ public class CwCoursePageGUI implements Initializable {
         timeline.stop();
         String page = config.getProperty(String.class, "cwMainPage");
         OpenPage.openNewPage(actionEvent, page);
+    }
+
+    private void downloadFileAndSave(String encoded, String fileType) throws IOException {
+        byte[] decoded = EncodeDecodeFile.decode(encoded);
+        String path = "./src/main/resources/downloadedfiles/" + new Random().nextLong() + "." + fileType ;
+        File file = new File(path);
+        file.createNewFile();
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(decoded);
+        fileOutputStream.close();
+        fileOutputStream.flush();
+    }
+
+    public void addEducational(ActionEvent actionEvent) {
+        EducationalThing educationalThing = new EducationalThing();
+
+    }
+
+    public void addHomeWork(ActionEvent actionEvent) {
+    }
+
+    public void downloadEducational(ActionEvent actionEvent) {
+        EducationalThing educationalThing = educationalSelected.get(0);
+        try {
+            downloadFileAndSave(educationalThing.getFileString(), educationalThing.getFileType());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteEducational(ActionEvent actionEvent) {
+        EducationalThing educationalThing = educationalSelected.get(0);
+        client.getServerController().deleteEducational(educationalThing.getId());
+        deleteLabel.setVisible(true);
     }
 }

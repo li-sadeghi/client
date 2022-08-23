@@ -93,5 +93,10 @@
       </Label>
       <Label fx:id="setTimeLabel" layoutX="814.0" layoutY="259.0" onMouseClicked="#setSelectionTimePage" text="Set Selection Time" visible="false" />
       <Button layoutX="614.0" layoutY="489.0" mnemonicParsing="false" onAction="#coursewarePage" text="Courseware" />
+      <Label fx:id="cwLabel" layoutX="544.0" layoutY="539.0" text="The unit selection operation has not timed out" textFill="#a90808" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
