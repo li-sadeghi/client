@@ -182,13 +182,20 @@ public class EduGramController implements Initializable {
 
     public void createChat(ActionEvent actionEvent) {
         String messageText = messageBox.getText();
-        for (SharedStudent student : studentsSelected) {
-            String senderId = Client.clientUsername;
-            String receiverUsername = student.getUsername();
-            client.getServerController().sendNewMessage(senderId, receiverUsername, messageText, MessageType.TEXT );
+        if (Client.isConnect){
+            for (SharedStudent student : studentsSelected) {
+                String senderId = Client.clientUsername;
+                String receiverUsername = student.getUsername();
+                client.getServerController().sendNewMessage(senderId, receiverUsername, messageText, MessageType.TEXT );
+                sentNoticeLabel.setVisible(true);
+                messageBox.clear();
+            }
+        }else {
+            sentNoticeLabel.setVisible(true);
+            sentNoticeLabel.setText("You Are Disconnected!");
+            messageBox.clear();
         }
-        sentNoticeLabel.setVisible(true);
-        messageBox.clear();
+
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {

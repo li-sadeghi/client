@@ -288,10 +288,11 @@ public class CwCoursePageGUI implements Initializable {
 
     public void addEducational(ActionEvent actionEvent) {
         EducationalThing educationalThing = new EducationalThing();
-
+        //TODO
     }
 
     public void addHomeWork(ActionEvent actionEvent) {
+        //TODO
     }
 
     public void downloadEducational(ActionEvent actionEvent) {
