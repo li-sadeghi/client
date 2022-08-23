@@ -4,6 +4,7 @@ import config.Config;
 import extra.Deadline;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import network.Client;
 import network.ServerController;
@@ -33,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -88,6 +92,10 @@ public class CwCoursePageGUI implements Initializable {
     Button deleteButton;
     @FXML
     Label deleteLabel;
+    @FXML
+    Label hwAddNotice;
+    @FXML
+    Label eduAddNotice;
 
 
     @Override
@@ -118,7 +126,8 @@ public class CwCoursePageGUI implements Initializable {
                 ArrayList<EducationalThing> educationalThings = null;
                 try {
                     homeWorks = getAllHomeworks(course);
-                    Thread.sleep(2000);
+//                    Thread.sleep(2000);
+                    PauseTransition pause = new PauseTransition(Duration.millis(2000));
                     educationalThings = getAllEducations(course);
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
@@ -135,9 +144,11 @@ public class CwCoursePageGUI implements Initializable {
         ArrayList<EducationalThing> educationalThings = new ArrayList<>();
         for (Integer id : course.getEducationalThingsId()) {
             Response response = client.getServerController().getEducational(id);
+            PauseTransition pause = new PauseTransition(Duration.millis(5));
             EducationalThing educationalThing= (EducationalThing) response.getData("educational");
             educationalThings.add(educationalThing);
-            Thread.sleep(50);
+//            Thread.sleep(50);
+
         }
         return educationalThings;
     }
@@ -148,7 +159,8 @@ public class CwCoursePageGUI implements Initializable {
             Response response = client.getServerController().getHomework(id);
             HomeWork homeWork= (HomeWork) response.getData("homework");
             homeWorks.add(homeWork);
-            Thread.sleep(30);
+//            Thread.sleep(30);
+            PauseTransition pause = new PauseTransition(Duration.millis(20));
         }
         return homeWorks;
     }
@@ -161,10 +173,10 @@ public class CwCoursePageGUI implements Initializable {
         homeworksTable = new TableView<>();
         calendarTable = new TableView<>();
         TableColumn<Deadline, String> deadLineNameColumn = new TableColumn<>("name");
-        deadLineNameColumn.setPrefWidth(100);
+        deadLineNameColumn.setPrefWidth(150);
         deadLineNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn<Deadline, String> timeColumn = new TableColumn<>("deadLine");
-        timeColumn.setPrefWidth(250);
+        timeColumn.setPrefWidth(200);
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
         calendarTable.setPrefWidth(350);
@@ -251,7 +263,9 @@ public class CwCoursePageGUI implements Initializable {
 
     public ArrayList<Deadline> getDeadlines(ArrayList<HomeWork> homeWorks){
         ArrayList<Deadline> deadlines = new ArrayList<>();
+        if (homeWorks == null) return deadlines;
         for (HomeWork homeWork : homeWorks) {
+            if (homeWork == null) continue;
             Deadline deadline = new Deadline(homeWork.getHomeWorkName(), homeWork.getEndTime());
             deadlines.add(deadline);
         }
@@ -287,12 +301,68 @@ public class CwCoursePageGUI implements Initializable {
     }
 
     public void addEducational(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+                new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3"),
+                new FileChooser.ExtensionFilter("IMAGES", "*.jpg"),
+                new FileChooser.ExtensionFilter("VIDEOS", "*.mp4"));
+
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        byte[] byteArray = null;
+        if (selectedFile != null) {
+//            if(selectedFile.length()>2000000){ //2 MB
+//                throw new SizeLimitExceededException();
+//            }
+            try {
+                byteArray = Files.readAllBytes(selectedFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String text = EncodeDecodeFile.byteArrayToString(byteArray);
+        String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
         EducationalThing educationalThing = new EducationalThing();
-        //TODO
+        educationalThing.setName(eduNameField.getText());
+        educationalThing.setFileType(fileType);
+        educationalThing.setFileString(text);
+        client.getServerController().addNewEducational(educationalThing, course);
+        eduAddNotice.setVisible(true);
     }
 
     public void addHomeWork(ActionEvent actionEvent) {
-        //TODO
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
+                new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3"),
+                new FileChooser.ExtensionFilter("IMAGES", "*.jpg"),
+                new FileChooser.ExtensionFilter("VIDEOS", "*.mp4"));
+
+
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        byte[] byteArray = null;
+        if (selectedFile != null) {
+//            if(selectedFile.length()>2000000){ //2 MB
+//                throw new SizeLimitExceededException();
+//            }
+            try {
+                byteArray = Files.readAllBytes(selectedFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String text = EncodeDecodeFile.byteArrayToString(byteArray);
+        String fileType = EncodeDecodeFile.getFormat(String.valueOf(selectedFile.toPath()));
+        HomeWork homeWork = new HomeWork();
+        homeWork.setHomeWorkFileType(fileType);
+        homeWork.setHomeworkFileString(text);
+        homeWork.setCourseId(course.getId());
+        homeWork.setStartTime(DateAndTime.getDateAndTime());
+        homeWork.setHomeWorkName(hwNameField.getText());
+        homeWork.setEndTime(endTimeField.getText());
+        client.getServerController().addNewHomeworkToCourse(homeWork);
+        hwAddNotice.setVisible(true);
     }
 
     public void downloadEducational(ActionEvent actionEvent) {

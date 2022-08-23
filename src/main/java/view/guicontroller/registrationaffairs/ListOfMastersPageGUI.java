@@ -127,10 +127,10 @@ public class ListOfMastersPageGUI implements Initializable {
         gradeCol.setPrefWidth(250);
         gradeCol.setCellValueFactory(new PropertyValueFactory<>("grade"));
         TableColumn<SharedMaster, String> roomNumberCol = new TableColumn<>("room number");
-        roomNumberCol.setPrefWidth(250);
+        roomNumberCol.setPrefWidth(100);
         roomNumberCol.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         TableColumn<SharedMaster, Enum> role = new TableColumn<>("role");
-        role.setPrefWidth(100);
+        role.setPrefWidth(250);
         role.setCellValueFactory(new PropertyValueFactory<>("masterRole"));
         mastersTable.setPrefWidth(900);
         mastersTable.setPrefHeight(400);

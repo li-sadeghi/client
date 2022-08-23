@@ -8,6 +8,7 @@ import request.RequestType;
 import response.Response;
 import sharedmodels.chatroom.Message;
 import sharedmodels.chatroom.MessageType;
+import sharedmodels.cw.EducationalThing;
 import sharedmodels.cw.HomeWork;
 import sharedmodels.cw.Solution;
 import sharedmodels.department.Course;
@@ -78,14 +79,19 @@ public class ServerController {
 //        }
 //        return response;
         Response response = null;
-        try {
-            String input = scanner.nextLine();
-            response = objectMapper.readValue(input, Response.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (NoSuchElementException n){
-            disconnect();
-        }
+        do {
+            try {
+                String input = scanner.nextLine();
+                response = objectMapper.readValue(input, Response.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }catch (NoSuchElementException n){
+                disconnect();
+                break;
+            }catch (Exception e){
+                System.out.println("next line exception");
+            }
+        }while (response == null);
         return response;
     }
 
@@ -373,6 +379,19 @@ public class ServerController {
     public void deleteEducational(int id) {
         Request request = new Request(RequestType.DELETE_EDUCATIONAL);
         request.addData("id", id);
+        sendRequest(request);
+    }
+
+    public void addNewHomeworkToCourse(HomeWork homeWork) {
+        Request request = new Request(RequestType.ADD_HOMEWORK);
+        request.addData("homework", homeWork);
+        sendRequest(request);
+    }
+
+    public void addNewEducational(EducationalThing educationalThing, Course course) {
+        Request request = new Request(RequestType.ADD_EDUCATIONAL);
+        request.addData("educational", educationalThing);
+        request.addData("courseId", course.getId());
         sendRequest(request);
     }
 }

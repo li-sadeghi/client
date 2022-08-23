@@ -39,18 +39,28 @@
       </Label>
       <Label layoutX="38.0" layoutY="524.0" text="Educational(Click to Download):" />
       <VBox fx:id="educationalVbox" layoutX="24.0" layoutY="551.0" prefHeight="100.0" prefWidth="300.0" />
-      <Label fx:id="label1" layoutX="545.0" layoutY="447.0" text="Add Thing:" />
-      <Button fx:id="educationalAddButton" layoutX="553.0" layoutY="511.0" mnemonicParsing="false" onAction="#addEducational" text="Upload" />
-      <TextField fx:id="eduNameField" layoutX="546.0" layoutY="473.0" promptText="educational name " />
-      <TextField fx:id="hwNameField" layoutX="754.0" layoutY="473.0" promptText="homework name" />
-      <Label fx:id="label2" layoutX="760.0" layoutY="447.0" text="Add homework" />
-      <Button fx:id="homeworkAddButton" layoutX="760.0" layoutY="548.0" mnemonicParsing="false" onAction="#addHomeWork" text="Upload" />
-      <TextField fx:id="endTimeField" layoutX="753.0" layoutY="511.0" promptText="end time" />
+      <Label fx:id="label1" layoutX="545.0" layoutY="447.0" text="Add Thing:" visible="false" />
+      <Button fx:id="educationalAddButton" layoutX="553.0" layoutY="511.0" mnemonicParsing="false" onAction="#addEducational" text="Upload" visible="false" />
+      <TextField fx:id="eduNameField" layoutX="546.0" layoutY="473.0" promptText="educational name " visible="false" />
+      <TextField fx:id="hwNameField" layoutX="754.0" layoutY="473.0" promptText="homework name" visible="false" />
+      <Label fx:id="label2" layoutX="760.0" layoutY="447.0" text="Add homework" visible="false" />
+      <Button fx:id="homeworkAddButton" layoutX="760.0" layoutY="548.0" mnemonicParsing="false" onAction="#addHomeWork" text="Upload" visible="false" />
+      <TextField fx:id="endTimeField" layoutX="753.0" layoutY="511.0" promptText="end time" visible="false" />
       <Button layoutX="55.0" layoutY="655.0" mnemonicParsing="false" onAction="#downloadEducational" text="Download" />
       <Button fx:id="deleteButton" layoutX="148.0" layoutY="655.0" mnemonicParsing="false" onAction="#deleteEducational" text="Delete" visible="false" />
       <Label fx:id="deleteLabel" layoutX="246.0" layoutY="659.0" text="DELETED!" textFill="#ae0404" visible="false">
          <font>
             <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="eduAddNotice" layoutX="567.0" layoutY="563.0" text="Educational ADDED!" textFill="#0a7e40" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="hwAddNotice" layoutX="774.0" layoutY="593.0" text="HomeWork ADDED!" textFill="#07811d" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
    </children>

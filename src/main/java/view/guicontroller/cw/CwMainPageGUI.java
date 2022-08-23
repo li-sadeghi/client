@@ -5,6 +5,7 @@ import extra.Deadline;
 import extra.StringMatcher;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -107,6 +108,7 @@ public class CwMainPageGUI implements Initializable {
                         throw new RuntimeException(e);
                     }
                 }
+                PauseTransition pause = new PauseTransition(Duration.millis(1000));
                 setPage(courses, homeWorks);
 
             }
@@ -117,29 +119,37 @@ public class CwMainPageGUI implements Initializable {
 
     private ArrayList<HomeWork> getAllHomeworks(ArrayList<Course> courses) throws IOException {
         ArrayList<HomeWork>homeWorks = new ArrayList<>();
+        if (courses == null) return homeWorks;
         for (Course course : courses) {
-            final int size = course.getHomeWorksId().size();
-            final int[] copySize = {size - 1};
-            newTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    int id = course.getHomeWorksId().get(copySize[0]);
-                    Response response = null;
-                    try {
-                        response = client.getServerController().getHomework(id);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    HomeWork homeWork= (HomeWork) response.getData("homework");
-                    homeWorks.add(homeWork);
-                    copySize[0]--;
-                }
-            }));
-            timeline.setCycleCount(size);
-            timeline.playFromStart();
+//            System.out.println(course.getHomeWorksId().size());
+            for (Integer id : course.getHomeWorksId()) {
+                Response response = client.getServerController().getHomework(id);
+                HomeWork homeWork= (HomeWork) response.getData("homework");
+                homeWorks.add(homeWork);
+                PauseTransition pause = new PauseTransition(Duration.millis(100));
+            }
+
+//            final int size = course.getHomeWorksId().size();
+//            final int[] copySize = {size - 1};
+//            newTimeline = new Timeline(new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent event) {
+//                    int id = course.getHomeWorksId().get(copySize[0]);
+//                    Response response = null;
+//                    try {
+//                        response = client.getServerController().getHomework(id);
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    HomeWork homeWork= (HomeWork) response.getData("homework");
+//                    homeWorks.add(homeWork);
+//                    copySize[0]--;
+//                }
+//            }));
+//            timeline.setCycleCount(size);
+//            timeline.playFromStart();
 
         }
-        newTimeline.stop();
         return homeWorks;
     }
 
@@ -203,10 +213,12 @@ public class CwMainPageGUI implements Initializable {
     public ArrayList<Deadline> getDeadlines(ArrayList<Course> courses, ArrayList<HomeWork> homeWorks){
         ArrayList<Deadline> deadlines = new ArrayList<>();
         for (Course course : courses) {
+            if (course == null) continue;
             Deadline deadline = new Deadline(course.getName(), course.getExamTime());
             deadlines.add(deadline);
         }
         for (HomeWork homeWork : homeWorks) {
+            if (homeWork == null)continue;
             Deadline deadline = new Deadline(homeWork.getHomeWorkName(), homeWork.getEndTime());
             deadlines.add(deadline);
         }

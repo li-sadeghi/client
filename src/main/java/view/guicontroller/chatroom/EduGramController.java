@@ -207,7 +207,7 @@ public class EduGramController implements Initializable {
     public void backMainMenu(ActionEvent actionEvent) throws IOException {
         timeline.stop();
         String page = config.getProperty(String.class, "studentMainMenu");
-        if (Client.clientType.equals("masterType")){
+        if (Client.clientType.equals(config.getProperty(String.class, "masterType"))){
             page = config.getProperty(String.class, "masterMainMenu");
         }
         OpenPage.openNewPage(actionEvent, page);
