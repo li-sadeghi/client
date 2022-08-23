@@ -92,13 +92,16 @@ public class HomeWorkPageGUI implements Initializable {
                     downloadButton.setVisible(true);
                     try {
                         setPageVip();
+                        Thread.sleep(20);
                     } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 try {
                     setPage();
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -110,12 +113,13 @@ public class HomeWorkPageGUI implements Initializable {
 
     }
 
-    public void setPage() throws IOException {
+    public void setPage() throws IOException, InterruptedException {
         nameLabel.setText(homeWork.getHomeWorkName());
         if (isMaster){
             markLabel.setText("none");
         }else {
             if (studentHaveSolution(homeWork)){
+                Thread.sleep(20);
                 Solution solution = getSolution(homeWork);
                 markLabel.setText(String.valueOf(solution.getMark()));
             }else {
@@ -132,12 +136,19 @@ public class HomeWorkPageGUI implements Initializable {
 
     private boolean studentHaveSolution(HomeWork homeWork) throws IOException {
         Response response = client.getServerController().checkHaveSolutionToHomeWork(homeWork.getId(), Client.clientUsername);
-        return (boolean) response.getData("result");
+        boolean haveSol = false;
+        if (response!= null){
+            haveSol = (boolean) response.getData("result");
+        }
+        return haveSol;
     }
 
     private void setPageVip() throws IOException {
         Response response = client.getServerController().getAllSolutionsToHomework(homeWork.getId());
-        ArrayList<Solution> solutions = (ArrayList<Solution>) response.getData("solutions");
+        ArrayList<Solution> solutions = new ArrayList<>();
+         if (response != null){
+             solutions= (ArrayList<Solution>) response.getData("solutions");
+         }
         solutionsVbox.getChildren().clear();
         solutionsTable = new TableView<>();
 
@@ -154,8 +165,8 @@ public class HomeWorkPageGUI implements Initializable {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
         TableColumn<Solution, Double> markColumn = new TableColumn<>("mark");
-        timeColumn.setPrefWidth(70);
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("mark"));
+        markColumn.setPrefWidth(70);
+        markColumn.setCellValueFactory(new PropertyValueFactory<>("mark"));
         solutionsTable.setPrefWidth(500);
         solutionsTable.setPrefHeight(300);
 
@@ -197,7 +208,6 @@ public class HomeWorkPageGUI implements Initializable {
     public void downloadMedia(ActionEvent actionEvent) throws IOException {
         Solution solution = solutionsSelected.get(0);
         downloadFileAndSave(solution.getAnswerFileString(), solution.getAnswerFileType());
-        downloadNotice.setVisible(true);
     }
 
     private void downloadFileAndSave(String encoded, String fileType) throws IOException {
@@ -249,5 +259,10 @@ public class HomeWorkPageGUI implements Initializable {
         solution.setAnswerFileString(text);
         client.getServerController().sendNewSolution(homeWork, solution);
         uploadNotice.setVisible(true);
+    }
+
+    public void downloadHomeWork(ActionEvent actionEvent) throws IOException {
+        downloadFileAndSave(homeWork.getHomeworkFileString(), homeWork.getHomeWorkFileType());
+        downloadNotice.setVisible(true);
     }
 }

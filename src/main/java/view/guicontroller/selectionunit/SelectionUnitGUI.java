@@ -96,9 +96,9 @@ public class SelectionUnitGUI implements Initializable {
         departmentColumn.setPrefWidth(100);
         departmentColumn.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
 
-        TableColumn<Course, Boolean> starredColumn = new TableColumn<>("starred");
+        TableColumn<Course, String> starredColumn = new TableColumn<>("starred");
         starredColumn.setPrefWidth(100);
-        starredColumn.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
+        starredColumn.setCellValueFactory(new PropertyValueFactory<>("isStarred"));
 
         allCoursesTable.setPrefWidth(400);
         allCoursesTable.setPrefHeight(300);
@@ -138,9 +138,9 @@ public class SelectionUnitGUI implements Initializable {
         sugDepartmentColumn.setPrefWidth(100);
         sugDepartmentColumn.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
 
-        TableColumn<Course, Boolean> sugStarredColumn = new TableColumn<>("starred");
+        TableColumn<Course, String> sugStarredColumn = new TableColumn<>("starred");
         sugStarredColumn.setPrefWidth(100);
-        sugStarredColumn.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
+        sugStarredColumn.setCellValueFactory(new PropertyValueFactory<>("isStarred"));
 
         suggestedCoursesTable.setPrefWidth(400);
         suggestedCoursesTable.setPrefHeight(300);
@@ -156,7 +156,7 @@ public class SelectionUnitGUI implements Initializable {
         suggestedCoursesTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                coursesSelected = allCoursesTable.getSelectionModel().getSelectedItems();
+                coursesSelected = suggestedCoursesTable.getSelectionModel().getSelectedItems();
             }
         });
 
@@ -165,9 +165,9 @@ public class SelectionUnitGUI implements Initializable {
     private void setStarredCourses(ArrayList<Course> allCourses, ArrayList<Course> starredCourses) {
         for (Course course : allCourses) {
             if (isStarred(course, starredCourses)){
-                course.setStarred(true);
+                course.setIsStarred("Yes");
             }else {
-                course.setStarred(false);
+                course.setIsStarred("No");
             }
         }
     }

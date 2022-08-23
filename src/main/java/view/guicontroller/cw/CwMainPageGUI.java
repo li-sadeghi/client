@@ -47,6 +47,7 @@ public class CwMainPageGUI implements Initializable {
     public static Config config = Config.getConfig();
     public static boolean isMaster;
     private Timeline timeline;
+    private Timeline newTimeline;
 
     public static TableView<Course> coursesTable;
     public static List<Course> coursesSelected = new ArrayList<>();
@@ -91,7 +92,7 @@ public class CwMainPageGUI implements Initializable {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    courses = MasterData.courses;
+                    courses = MasterData.coursesHave;
                     try {
                         homeWorks = getAllHomeworks(courses);
                     } catch (IOException e) {
@@ -109,12 +110,28 @@ public class CwMainPageGUI implements Initializable {
     private ArrayList<HomeWork> getAllHomeworks(ArrayList<Course> courses) throws IOException {
         ArrayList<HomeWork>homeWorks = new ArrayList<>();
         for (Course course : courses) {
-            for (Integer id : course.getHomeWorksId()) {
-                Response response = client.getServerController().getHomework(id);
-                HomeWork homeWork= (HomeWork) response.getData("homework");
-                homeWorks.add(homeWork);
-            }
+            final int size = course.getHomeWorksId().size();
+            final int[] copySize = {size - 1};
+            newTimeline = new Timeline(new KeyFrame(Duration.millis(50), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    int id = course.getHomeWorksId().get(copySize[0]);
+                    Response response = null;
+                    try {
+                        response = client.getServerController().getHomework(id);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    HomeWork homeWork= (HomeWork) response.getData("homework");
+                    homeWorks.add(homeWork);
+                    copySize[0]--;
+                }
+            }));
+            timeline.setCycleCount(size);
+            timeline.playFromStart();
+
         }
+        newTimeline.stop();
         return homeWorks;
     }
 

@@ -50,6 +50,8 @@ public class CwCoursePageGUI implements Initializable {
 
     public static TableView<Deadline> calendarTable;
     private Timeline timeline;
+    private Timeline newTimeline;
+    private Thread thread;
     @FXML
     AnchorPane background;
     @FXML
@@ -64,6 +66,7 @@ public class CwCoursePageGUI implements Initializable {
     Label courseNameLabel;
     @FXML
     Label noticeLabel;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +87,7 @@ public class CwCoursePageGUI implements Initializable {
                 ArrayList<HomeWork> homeWorks = null;
                 try {
                     homeWorks = getAllHomeworks(course);
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 setPage( homeWorks);
@@ -95,12 +98,14 @@ public class CwCoursePageGUI implements Initializable {
 
     }
 
-    private ArrayList<HomeWork> getAllHomeworks(Course course) throws IOException {
+    private ArrayList<HomeWork> getAllHomeworks(Course course) throws IOException, InterruptedException {
         ArrayList<HomeWork> homeWorks = new ArrayList<>();
+        System.out.println(course.getHomeWorksId().size());
         for (Integer id : course.getHomeWorksId()) {
             Response response = client.getServerController().getHomework(id);
-            HomeWork homeWork = (HomeWork) response.getData("homework");
+            HomeWork homeWork= (HomeWork) response.getData("homework");
             homeWorks.add(homeWork);
+            Thread.sleep(50);
         }
         return homeWorks;
     }

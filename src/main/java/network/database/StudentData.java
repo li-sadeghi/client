@@ -48,6 +48,7 @@ public class StudentData {
             coursesHave = (ArrayList<Course>) response.getData("coursesHave");
             starredCourses = (ArrayList<Course>) response.getData("starredCourses");
             suggestedCourses = (ArrayList<Course>) response.getData("suggestedCourses");
+
         }
         MessageToAdmin.loadAndSendMessages();
     }
