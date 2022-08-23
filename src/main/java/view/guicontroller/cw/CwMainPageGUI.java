@@ -212,6 +212,7 @@ public class CwMainPageGUI implements Initializable {
 
     public ArrayList<Deadline> getDeadlines(ArrayList<Course> courses, ArrayList<HomeWork> homeWorks){
         ArrayList<Deadline> deadlines = new ArrayList<>();
+        if (courses == null || homeWorks == null)return deadlines;
         for (Course course : courses) {
             if (course == null) continue;
             Deadline deadline = new Deadline(course.getName(), course.getExamTime());

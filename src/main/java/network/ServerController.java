@@ -89,7 +89,7 @@ public class ServerController {
                 disconnect();
                 break;
             }catch (Exception e){
-                System.out.println("next line exception");
+//                System.out.println("next line exception");
             }
         }while (response == null);
         return response;
@@ -393,5 +393,12 @@ public class ServerController {
         request.addData("educational", educationalThing);
         request.addData("courseId", course.getId());
         sendRequest(request);
+    }
+
+    public Response getAllHomeworksOfCourse(String courseId) throws IOException {
+        Request request = new Request(RequestType.ALL_HOMEWORKS);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+        return getResponse();
     }
 }

@@ -155,6 +155,8 @@ public class CwCoursePageGUI implements Initializable {
 
     private ArrayList<HomeWork> getAllHomeworks(Course course) throws IOException, InterruptedException {
         ArrayList<HomeWork> homeWorks = new ArrayList<>();
+//        Response response = client.getServerController().getAllHomeworksOfCourse(course.getId());
+//        homeWorks = (ArrayList<HomeWork>) response.getData("homeworks");
         for (Integer id : course.getHomeWorksId()) {
             Response response = client.getServerController().getHomework(id);
             HomeWork homeWork= (HomeWork) response.getData("homework");
