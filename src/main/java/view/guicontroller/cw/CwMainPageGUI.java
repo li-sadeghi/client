@@ -70,6 +70,8 @@ public class CwMainPageGUI implements Initializable {
     Button addButton;
     @FXML
     Label noticeLabel;
+    @FXML
+    Button addTaButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,6 +80,7 @@ public class CwMainPageGUI implements Initializable {
             counter = StudentMainMenuGUI.counter;
             isMaster = false;
         } else {
+            addTaButton.setVisible(true);
             courseIdField.setVisible(true);
             studentIdField.setVisible(true);
             addButton.setVisible(true);
@@ -253,6 +256,13 @@ public class CwMainPageGUI implements Initializable {
         String studentId = studentIdField.getText();
         String courseId = courseIdField.getText();
         client.getServerController().addNewUserToCourse(studentId, courseId);
+        noticeLabel.setVisible(true);
+    }
+
+    public void addTA(ActionEvent actionEvent) {
+        String taId = studentIdField.getText();
+        String courseId = courseIdField.getText();
+        client.getServerController().addTARequest(taId, courseId);
         noticeLabel.setVisible(true);
     }
 }

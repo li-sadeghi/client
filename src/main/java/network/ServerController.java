@@ -401,4 +401,11 @@ public class ServerController {
         sendRequest(request);
         return getResponse();
     }
+
+    public void addTARequest(String taId, String courseId) {
+        Request request = new Request(RequestType.ADD_TA);
+        request.addData("taId", taId);
+        request.addData("courseId", courseId);
+        sendRequest(request);
+    }
 }

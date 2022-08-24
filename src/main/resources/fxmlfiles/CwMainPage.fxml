@@ -35,5 +35,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Button fx:id="addTaButton" layoutX="629.0" layoutY="648.0" mnemonicParsing="false" onAction="#addTA" text="Add Student To TAs" visible="false" />
    </children>
 </AnchorPane>
